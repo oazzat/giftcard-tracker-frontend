@@ -24,21 +24,7 @@ class App extends Component {
   }
 
 
-  combineCardsAndListings = () =>{
-    let newListings = this.props.allListings.map(listing=>{
-      let curCard = this.props.allCards.find(card=>{
-        return card.id === listing.giftcard_id
-      })
-
-      listing.giftcard = curCard
-      return listing
-    })
-
-    this.props.addCardToListing(newListings)
-  }
-
   render() {
-    this.combineCardsAndListings()
 
     return (
       <div className="App">

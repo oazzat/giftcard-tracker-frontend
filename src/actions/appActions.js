@@ -23,5 +23,5 @@ export const populateAllListings = (allListings) => {
 }
 
 export const addCardToListing = (allListings) => {
-  return {type: "ADD_CARD_TO_LISTING", payload: allListings }
+  return {type: "ADD_CARD_TO_LISTINGS", payload: allListings }
 }

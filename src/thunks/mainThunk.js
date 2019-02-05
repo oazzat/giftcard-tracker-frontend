@@ -1,6 +1,6 @@
 import {setCurrentUser} from '../actions/appActions'
 import {resetCurrentUser} from '../actions/appActions'
-import {populateAllCards} from '../actions/appActions'
+import {populateAllCards, addCardToListing} from '../actions/appActions'
 import {populateAllListings} from '../actions/appActions'
 
 export const getCurrentUser = () => dispatch => {
@@ -22,7 +22,10 @@ export const getAllListings = () => dispatch =>{
     return fetch("http://localhost:3000/api/v1/listings")
         .then(res => res.json())
         // .then(allListings => combineCardsAndListings(allListings))
-        .then(allListings => dispatch(populateAllListings(allListings)))
+        .then(allListings => {
+          dispatch(populateAllListings(allListings))
+          dispatch(addCardToListing(""))
+        })
 
 
 }
