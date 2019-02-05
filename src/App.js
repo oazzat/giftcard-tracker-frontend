@@ -19,7 +19,7 @@ class App extends Component {
   componentDidMount = () =>{
 
     this.props.getAllCards()
-    this.props.getAllListings()
+    //this gets cards, which dispatches the get listings which dispatches the adding gc to listings
 
   }
 
@@ -31,13 +31,15 @@ class App extends Component {
           <BrowserRouter>
             <React.Fragment>
             <NavBar/>
+            <Switch>
 
-              <Route exact path='/' component={Home} />
               <Route path='/home' component={Home} />
               <Route path='/login' component={LoginPage} />
               <Route path='/buy' component={Buy} />
               <Route path='/sell' component={Sell} />
               <Route path='/profile' component={Profile} />
+              <Route path='/' component={Home} />
+            </Switch>
             </React.Fragment>
           </BrowserRouter>
 

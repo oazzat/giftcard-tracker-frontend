@@ -15,6 +15,7 @@ export const getAllCards = () => dispatch =>{
     return fetch("http://localhost:3000/api/v1/giftcards")
         .then(res => res.json())
         .then(allCards => dispatch(populateAllCards(allCards)))
+        .then(getListings => dispatch(getAllListings()))
 
 }
 
