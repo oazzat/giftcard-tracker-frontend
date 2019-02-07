@@ -37,3 +37,7 @@ export const addListingToListings = (newListing) => {
 export const updateGc = updatedGiftcard =>{
   return {type: "UPDATE_GIFTCARD", payload: updatedGiftcard}
 }
+
+export const topSelling = list =>{
+  return {type: "TOP_SELLING", payload: list}
+}

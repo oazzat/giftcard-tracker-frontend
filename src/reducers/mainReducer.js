@@ -8,7 +8,7 @@ let images = {
 }
 
 
-export function mainReducer (state = {user: {}, loggedIn:false, allCards: [], allListings: [], images}, action ){
+export function mainReducer (state = {user: {}, loggedIn:false, allCards: [], allListings: [],topSelling: [], images}, action ){
   switch (action.type) {
     case "SET_CURRENT_USER":
       return {...state, user: action.payload, loggedIn: true}
@@ -39,6 +39,8 @@ export function mainReducer (state = {user: {}, loggedIn:false, allCards: [], al
         let newCardss = state.allCards.filter(gcard => gcard.user_id !== action.payload.user_id)
         newCardss.push(action.payload)
         return {...state, allCards: newCardss}
+      case "TOP_SELLING":
+        return {...state, topSelling: action.payload}
     default:
       return state
   }

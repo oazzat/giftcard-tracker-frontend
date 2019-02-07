@@ -1,5 +1,6 @@
 import React from 'react'
 import {getCurrentUser} from "./thunks/mainThunk"
+import {getBestSellers} from './thunks/mainThunk'
 import {connect} from 'react-redux'
 
 class Home extends React.Component {
@@ -7,66 +8,15 @@ class Home extends React.Component {
   componentDidMount = () =>{
 
     this.props.getCurrentUser()
+    this.props.getBestSellers()
 
   }
 
   topSellingCards = () =>{
-    let sold = this.props.allListings.filter(listing=>{
-      return listing.date_sold !== null
-    })
 
-    let wal = 0
-    let ama = 0
-    let bes = 0
-    let tar = 0
-    let itu = 0
-
-    let orderedList = [
-      {count: 0,},
-      {count: 0},
-      {count: 0},
-      {count: 0},
-      {count: 0}
-
-    ]
-
-    if (sold[0]!=""){
-      if (sold[0]!=undefined){
-        if(sold[0].giftcard !== undefined){
-
-
-    sold.forEach(listing => {
-      if (listing.giftcard['card_type'] === "Best-Buy"){
-        orderedList[0]['count']++
-        orderedList[0].img = listing.giftcard.img}
-      if(listing.giftcard['card_type'] === "Amazon") {
-        orderedList[1]['count']++
-        orderedList[1].img = listing.giftcard.img}
-      if(listing.giftcard['card_type'] === "Walmart") {
-        orderedList[2]['count']++
-        orderedList[2].img = listing.giftcard.img}
-      if (listing.giftcard['card_type'] === "Target") {
-        orderedList[3]['count']++
-        orderedList[3].img = listing.giftcard.img}
-      if (listing.giftcard['card_type'] === "Itunes") {
-        orderedList[4]['count']++
-        orderedList[4].img = listing.giftcard.img}
-
-        })
-      }
+      return this.props.topSelling.map(obj=><li>{Object.keys(obj)[0]} = {Object.values(obj)[0]}</li>)
     }
-  }
 
-    orderedList = orderedList.sort((a,b)=>{
-      // console.log("SORT", a.count);
-      // console.log("SORT", b.count);
-      return a.count < b.count?1:-1
-    });
-
-    return orderedList.map((c,i)=>{
-      return <li key={i}> <img alt="" src={c.img}/> </li>
-    })
-  }
 
   render(){
     return(
@@ -75,21 +25,22 @@ class Home extends React.Component {
 
         BEST SELLING CARDS:
 
-        <ol>
+        <div>
         {this.topSellingCards()}
-        </ol>
+        </div>
       </div>
     )
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return {getCurrentUser: () => dispatch(getCurrentUser())}
+  return {getCurrentUser: () => dispatch(getCurrentUser()),
+          getBestSellers: () => dispatch(getBestSellers())}
 
 }
 
 const mapStateToProps = state =>{
-  return {allCards: state.allCards, allListings: state.allListings}
+  return {allCards: state.allCards, allListings: state.allListings, topSelling: state.topSelling}
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(Home)

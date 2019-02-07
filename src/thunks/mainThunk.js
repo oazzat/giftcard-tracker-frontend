@@ -1,7 +1,7 @@
 import {setCurrentUser} from '../actions/appActions'
 import {resetCurrentUser, updateGc} from '../actions/appActions'
 import {populateAllCards, addCardToListing, addCardtoAllCards} from '../actions/appActions'
-import {populateAllListings, addListingToListings} from '../actions/appActions'
+import {populateAllListings, addListingToListings, topSelling} from '../actions/appActions'
 
 
 export const getCurrentUser = () => dispatch => {
@@ -66,6 +66,12 @@ export const createListing = (listing) => dispatch =>{
   }))
   .then(res => res.json())
   .then(newGc => dispatch(updateGc(newGc)))
+}
+
+export const getBestSellers = () => dispatch => {
+  return fetch("http://localhost:3000/api/v1/stores/best_selling_stores")
+    .then(res => res.json())
+    .then(list => dispatch(topSelling(list)))
 }
 
 // const combineCardsAndListings = (allListings) =>{
