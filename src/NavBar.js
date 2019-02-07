@@ -31,9 +31,9 @@ logOut = () =>{
 const mapStateToProps = (state) =>{
   // console.log(state.state.showLogin);
   return{
-      user: state.state.user,
-      loggedIn: state.state.loggedIn,
-      showLogin: state.state.showLogin
+      user: state.user,
+      loggedIn: state.loggedIn,
+      showLogin: state.showLogin
   }
 }
 

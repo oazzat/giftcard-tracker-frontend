@@ -3,6 +3,7 @@ import {getCurrentUser} from "./thunks/mainThunk"
 import {connect} from 'react-redux'
 import CardListing from './CardListing'
 
+
 class Buy extends React.Component {
 
   componentDidMount = () =>{
@@ -14,14 +15,13 @@ class Buy extends React.Component {
     let newArr = []
     // console.log(this.props.allListings.length)
     if (this.props.allListings.length > 0 && this.props.allListings[0].giftcard){
-
      newArr = this.props.allListings.filter(listing => {
       return listing['date_sold'] === null
     })
 
 
       newArr = newArr.map(item=>{
-      return <li key={item.id}><CardListing key={item.id} listing={item} /></li>
+      return <li key={item.id}><CardListing key={item.id} card={item.giftcard} listing={item} /></li>
     })
 
     }
@@ -30,6 +30,7 @@ class Buy extends React.Component {
   }
 
   render(){
+
     return(
       <div>
         <h2>Buy Gift Cards:</h2>
@@ -47,7 +48,7 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 const mapStateToProps = (state) =>{
-  return {allListings: state.state.allListings}
+  return {allListings: state.allListings}
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(Buy)

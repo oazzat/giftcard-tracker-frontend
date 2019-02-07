@@ -72,7 +72,7 @@ class LoginPage extends React.Component {
 }
 
 const mapStateToProps = (state) =>{
-  return {loggedIn: state.state.loggedIn, showLogin: state.state.showLogin}
+  return {loggedIn: state.loggedIn, showLogin: state.showLogin}
 }
 
 const mapDispatchToProps = dispatch =>{

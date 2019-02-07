@@ -25,3 +25,15 @@ export const populateAllListings = (allListings) => {
 export const addCardToListing = (allListings) => {
   return {type: "ADD_CARD_TO_LISTINGS", payload: allListings }
 }
+
+export const addCardtoAllCards = (newCard) =>{
+  return {type: "ADD_CARD_TO_ALL_CARDS", payload: newCard}
+}
+
+export const addListingToListings = (newListing) => {
+  return {type: "ADD_LISTING_TO_LISTINGS",payload: newListing}
+}
+
+export const updateGc = updatedGiftcard =>{
+  return {type: "UPDATE_GIFTCARD", payload: updatedGiftcard}
+}

@@ -57,7 +57,7 @@ const mapDispatchToProps = (dispatch) =>{
 }
 
 const mapStateToProps = (state) =>{
-  return {allCards: state.state.allCards, allListings: state.state.allListings}
+  return {allCards: state.allCards, allListings: state.allListings}
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(App)
