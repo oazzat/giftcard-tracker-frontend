@@ -13,6 +13,7 @@ import {getAllCards} from './thunks/mainThunk'
 import {getAllListings} from './thunks/mainThunk'
 import {addCardToListing} from "./actions/appActions"
 import {connect} from 'react-redux'
+import AppBar from '@material-ui/core/AppBar'
 
 class App extends Component {
 
@@ -23,18 +24,29 @@ class App extends Component {
 
   }
 
-
+  styles = {
+    root: {
+      flexGrow: 1,
+    },
+    grow: {
+      flexGrow: 1,
+    },
+    menuButton: {
+      marginLeft: -12,
+      marginRight: 20,
+    },
+  };
   render() {
 
     return (
       <div className="App">
           <BrowserRouter>
             <React.Fragment>
+
             <NavBar/>
             <Switch>
 
               <Route path='/home' component={Home} />
-              <Route path='/login' component={LoginPage} />
               <Route path='/buy' component={Buy} />
               <Route path='/sell' component={Sell} />
               <Route path='/profile' component={Profile} />

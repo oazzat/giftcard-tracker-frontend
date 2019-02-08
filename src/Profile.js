@@ -134,7 +134,7 @@ class Profile extends React.Component {
       )
     }
     else{
-    return <Redirect to='/login'/>
+    return <Redirect to='/home'/>
     }
   }
 }

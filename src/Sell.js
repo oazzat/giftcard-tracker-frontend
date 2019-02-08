@@ -35,13 +35,13 @@ class Sell extends React.Component {
 
   render(){
 
-      return localStorage.length>0?(
+      return (
       <div>
         <h2>Choose Card to Sell: </h2>
         {this.getTracked()}
         {this.getPurchased()}
       </div>
-    ):<Redirect to="/login" />
+    )
 
   }
 }

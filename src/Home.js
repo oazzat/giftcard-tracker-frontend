@@ -2,6 +2,7 @@ import React from 'react'
 import {getCurrentUser} from "./thunks/mainThunk"
 import {getBestSellers} from './thunks/mainThunk'
 import {connect} from 'react-redux'
+import Button from '@material-ui/core/Button'
 
 class Home extends React.Component {
 
