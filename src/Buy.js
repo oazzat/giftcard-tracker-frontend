@@ -5,12 +5,21 @@ import CardListing from './CardListing'
 import GridListContainer from './GridList'
 import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 class Buy extends React.Component {
 
   state = {
     sortedList: [],
-    sortBy: "Sort By"
+    sortBy: "Sort By",
+    open: false,
+    card: ""
   }
 
   componentDidMount = () =>{
@@ -64,6 +73,20 @@ class Buy extends React.Component {
     this.setState({sortBy: e.target.value})
   }
 
+  handleClose = () => {
+    this.setState({ open: false });
+  };
+
+  handleClick = (card) =>{
+    console.log(card)
+    this.setState({open: true, card: card})
+
+  }
+
+  purchaseListing = () => {
+    //check if logged in and has enough money
+  }
+
   render(){
     // console.log("PROPS",this.props);
     return(
@@ -79,7 +102,33 @@ class Buy extends React.Component {
         <MenuItem value={"el"}>Expiration Date Latest to Earliest</MenuItem>
         </Select><br></br>
 
-        <GridListContainer listings={this.handleSort()}></GridListContainer>
+        <GridListContainer handleClick={this.handleClick} listings={this.handleSort()}></GridListContainer>
+
+        {this.state.open?(<Dialog
+          open={this.state.open}
+          onClose={this.handleClose}
+          aria-labelledby="form-dialog-title"
+        >
+          <DialogTitle id="form-dialog-title" align="center">Buy</DialogTitle>
+          <DialogContent >
+            <DialogContentText>
+              Are you sure you want to purchase this giftcard?
+            </DialogContentText><br></br>
+
+              {this.state.open?<img style={{display: "block", marginLeft: "auto", marginRight: "auto", height: "auto", width: "50%", maxWidth: "80%"}}src={this.state.card.store.img}/>:null}
+
+              <h3>Balance: ${this.state.card.balance}</h3>
+              <h5>Store: {this.state.card.store.name}</h5>
+              <h5>Expiration Date: {this.state.card.exp_date}</h5>
+
+          </DialogContent>
+          <DialogActions type="form">
+            <Button type="submit" onClick={this.purchaseListing} color="primary">
+              Buy Now
+            </Button>
+
+          </DialogActions>
+        </Dialog>):null}
 
       </div>
     )
@@ -92,7 +141,7 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 const mapStateToProps = (state) =>{
-  return {allListings: state.allListings}
+  return {allListings: state.allListings, loggedIn: state.loggedIn}
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(Buy)

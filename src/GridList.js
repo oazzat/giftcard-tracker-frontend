@@ -76,13 +76,13 @@ function GridListContainer(props) {
           :
           (props.listings.map(tile => (
             <GridListTile key={tile.id}>
-              <img style={{width: "200px", height: "120px", align: "center"}} src={tile.store.img} alt={tile.title} />
+              <img onClick={()=>props.handleClick(tile)} style={{width: "200px", height: "120px", align: "center"}} src={tile.store.img} alt={tile.title} />
 
               <GridListTileBar
                 style={{height: "40px", width: "400px"}}
-                title={<span style={{display: "flex"}}>"Price: $" {tile.listings[0].price}</span>}
+                title={<span style={{display: "flex"}}>Price: $ {tile.listings[0].price}</span>}
                 subtitle={<span >Balance: ${tile.balance}</span>}
-                subtitle={<span >exp_date: ${tile.exp_date}</span>}
+
                 actionIcon={
                   <IconButton className={classes.icon}>
                     <InfoIcon />
