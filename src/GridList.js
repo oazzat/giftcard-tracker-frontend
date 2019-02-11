@@ -49,19 +49,23 @@ function GridListContainer(props) {
 
   return (
     <div className={classes.root}>
-      <GridList cols={4}cellHeight={200} cellWidth={100} className={classes.gridList}>
-        <GridListTile key="Subheader" cols={4} style={{ height: 'auto' }}>
-          <ListSubheader component="div">All My Current Cards</ListSubheader>
-        </GridListTile>
+      <GridList cols={4}cellHeight={200}  className={classes.gridList}>
 
+      {props.cards?(<GridListTile key="Subheader" cols={4} style={{ height: 'auto' }}>
+      <ListSubheader component="div">All My Current Cards</ListSubheader>
+      </GridListTile>)
+      :
+      (<GridListTile key="Subheader" cols={4} style={{ height: 'auto' }}>
+      <ListSubheader component="div"></ListSubheader>
+      </GridListTile>)}
         {props.cards?
         (props.cards.map(tile => (
-          <GridListTile key={tile.img}>
+          <GridListTile key={tile.id}>
             <img style={{width: "200px", height: "120px", align: "center"}} src={tile.store.img} alt={tile.title} />
             <GridListTileBar
               style={{height: "40px", width: "400px"}}
               title={"Balance: $" + tile.balance}
-              subtitle={<span>by: {tile.author}</span>}
+              subtitle={<span>Balance: ${tile.balance}</span>}
               actionIcon={
                 <IconButton className={classes.icon}>
                   <InfoIcon />
@@ -71,12 +75,12 @@ function GridListContainer(props) {
           </GridListTile>)))
           :
           (props.listings.map(tile => (
-            <GridListTile key={tile.img}>
+            <GridListTile key={tile.id}>
               <img style={{width: "200px", height: "120px", align: "center"}} src={tile.store.img} alt={tile.title} />
               <GridListTileBar
                 style={{height: "40px", width: "400px"}}
-                title={"Balance: $" + tile.balance}
-                subtitle={<span>by: {tile.author}</span>}
+                title={<span style={{display: "flex"}}>"Price: $" + {tile.listings[0].price}</span>}
+                subtitle={<span >Balance: ${tile.balance}</span>}
                 actionIcon={
                   <IconButton className={classes.icon}>
                     <InfoIcon />

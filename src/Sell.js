@@ -1,25 +1,26 @@
 import React from 'react'
-import {getCurrentUser} from "./thunks/mainThunk"
+import {getCurrentUser, getUserCards} from "./thunks/mainThunk"
 import {connect} from 'react-redux'
 import Card from "./Card"
 import {Redirect} from 'react-router-dom'
 import CardListing from './CardListing'
 import LoginPage from './LoginPage'
+import GridListContainer from "./GridList"
 
 class Sell extends React.Component {
 
   componentDidMount = () =>{
 
     this.props.getCurrentUser()
+    this.props.getUserCards()
   }
 
 
   getTracked = () =>{
-      if (this.props.allCards.length > 0){
-        return this.props.allCards.filter(card=>{
-          return (card.user_id === this.props.user.id && card.listed === false)
-        }).reverse().map(card=>{
-            return <Card key={card.id} card={card} sell={true}/>
+    console.log(this.props.userCards);
+      if (this.props.userCards > 0){
+        return this.props.userCards.map(card=>{
+            return <Card key={card.id} card={card} calList={true}/>
           })
       }
   }
@@ -39,6 +40,7 @@ class Sell extends React.Component {
       return (this.props.loggedIn?
       <div>
         <h2>Choose Card to Sell: </h2>
+        <GridListContainer cards={this.props.userCards}></GridListContainer>
         {this.getTracked()}
         {this.getPurchased()}
       </div>
@@ -48,7 +50,8 @@ class Sell extends React.Component {
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return {getCurrentUser: () => dispatch(getCurrentUser())}
+  return {getCurrentUser: () => dispatch(getCurrentUser()),
+          getUserCards: () => dispatch(getUserCards())}
 
 }
 
@@ -56,7 +59,8 @@ const mapStateToProps = state =>{
   return {allCards: state.allCards,
           user: state.user,
           loggedIn: state.loggedIn,
-          allListings: state.allListings
+          allListings: state.allListings,
+          userCards: state.userCards.filter(listing=>listing.listed===false)
         }
 }
 
