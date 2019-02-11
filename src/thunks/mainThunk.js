@@ -1,6 +1,6 @@
 import {setCurrentUser} from '../actions/appActions'
 import {resetCurrentUser, updateGc} from '../actions/appActions'
-import {addCardtoUserCards, userCards, allStores, userSold, userPurchased, userForSale} from '../actions/appActions'
+import {addCardtoUserCards, userCards, allStores, userSold, userPurchased, userForSale, transactionResult} from '../actions/appActions'
 import {populateAllListings, addListingToListings, topSelling} from '../actions/appActions'
 
 
@@ -10,6 +10,7 @@ export const getCurrentUser = () => dispatch => {
         {method: "GET", headers: {Authorization: `Bearer ${localStorage.token}`}})
     .then(res => res.json())
     .then(user => user.status === 500? dispatch(resetCurrentUser()) : dispatch(setCurrentUser(user)))
+    .then(disp => disp.type === "SET_CURRENT_USER"? dispatch(getUserCards()):null)
 }
 
 export const getAllListings = () => dispatch =>{
@@ -104,6 +105,21 @@ export const getUserForSale = () => dispatch => {
   })
   .then(res => res.json())
   .then(listings => dispatch(userForSale(listings)))
+}
+
+export const performTransaction = (card) => dispatch =>{
+  console.log("THE ACRD", card);
+  return fetch(`http://localhost:3000/api/v1/listings/${card.id}`,{
+    method: "PATCH",
+    headers: {"Content-Type": "application/json", Authorization: `Bearer ${localStorage.token}`},
+    body: JSON.stringify(card)
+  })
+  .then(res => res.json())
+  .then(listing => dispatch(transactionResult(listing)))
+  .then(disp => dispatch(getCurrentUser()))
+  .then(disp => dispatch(getUserForSale()))
+  .then(disp => dispatch(getUserCards()))
+
 }
 
 // const combineCardsAndListings = (allListings) =>{

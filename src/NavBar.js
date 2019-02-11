@@ -64,6 +64,7 @@ displayLogin = () =><LoginPage toggleLogin={this.toggleLogin}/>
               <Button color="inherit" align='left' onClick={()=>this.props.history.push('/buy')}>Buy</Button>
               <Button color="inherit" align='left' onClick={()=>this.props.history.push('/sell')}>Sell</Button>
             </Typography>
+            {this.props.loggedIn?<Button color='inherit' >Current Balance: ${this.props.user.balance}</Button>:null}
             {this.props.loggedIn?<Button color='inherit' onClick={()=>this.props.history.push('/profile')}>Profile</Button>:null}
             {!this.props.loggedIn?<Button color="inherit" onClick={() => this.setState({toggle: !this.state.toggle})}>Login</Button>:<Button color='inherit' onClick={this.logOut}>LOG OUT</Button>}
           </Toolbar>

@@ -27,7 +27,9 @@ class Sell extends React.Component {
   componentDidMount = () =>{
 
     this.props.getCurrentUser()
-    this.props.getUserCards()
+    if (this.props.loggedIn){
+      this.props.getUserCards()
+    }
   }
 
   handleClose = () => {
@@ -60,9 +62,6 @@ class Sell extends React.Component {
     console.log(card)
     this.setState({open: true, card: card, price: card.balance*.8})
 
-
-
-
   }
 
   render(){
@@ -76,11 +75,6 @@ class Sell extends React.Component {
           onClose={this.handleClose}
           aria-labelledby="form-dialog-title"
         >
-        {/*<DialogActions>
-        <Button style={{align: "right"}} onClick={()=>this.setState({signUp: !this.state.signUp})} color="primary">
-          {!this.state.signUp?"Sign up":"Log in"}
-        </Button>
-        </DialogActions>*/}
           <DialogTitle id="form-dialog-title" align="center">Sell</DialogTitle>
           <DialogContent >
             <DialogContentText>
@@ -111,38 +105,6 @@ class Sell extends React.Component {
 
                 </React.Fragment>
 
-
-
-
-            {/*<TextField
-              autoFocus
-              margin="dense"
-              id="username"
-              label="Username"
-              type="username"
-              value={this.state.username}
-              onChange={this.handleChange('username')}
-              fullWidth
-            />
-            <TextField
-
-              margin="dense"
-              id="pass"
-              ref="password"
-              label="Password"
-              type={this.state.showPassword?"text":"password"}
-              value={this.state.password}
-              onChange={this.handleChange('password')}
-              fullWidth
-              InputProps={{
-                endAdornment: <IconButton
-                aria-label="Toggle password visibility"
-                onClick={()=>this.setState({showPassword: !this.state.showPassword})}
-                >
-                {this.state.showPassword ? <Visibility /> : <VisibilityOff />}
-                </IconButton>
-              }}
-            />*/}
           </DialogContent>
           <DialogActions type="form">
             <Button type="submit" onClick={this.createListing} color="primary">
@@ -165,12 +127,12 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 const mapStateToProps = state =>{
-  console.log("MAP STATE",state.userCards);
+  console.log("MAP STATE",state);
   return {allCards: state.allCards,
           user: state.user,
           loggedIn: state.loggedIn,
           // allListings: state.allListings,
-          userCards: state.userCards.filter(listing=>listing.listed===false),
+          userCards: state.userCards.length>0?(state.userCards.filter(listing=>listing.listed===false)):[],
           allListings: state.allListings
         }
 }

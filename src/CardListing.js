@@ -28,7 +28,8 @@ changeHandler = (e) =>{
 }
 
 showDetails = () =>{
-
+  console.log(this.props.listing.giftcard.id)
+    console.log(this.props.listing.user_id)
   return this.props.profile?(
     <div>
       <p>Balance: ${this.props.listing.giftcard.balance}</p>

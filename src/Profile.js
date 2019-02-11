@@ -131,6 +131,7 @@ class Profile extends React.Component {
 
   render(){
     // console.log("STATE",this.state);
+    console.log(this.props.userCards);
 
     if (localStorage.token!=undefined || !localStorage.length === 0){
       return (

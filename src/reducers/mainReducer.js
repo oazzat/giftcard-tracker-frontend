@@ -49,6 +49,11 @@ export function mainReducer (state = {user: {}, loggedIn:false, allCards: [], al
         return {...state, userPurchased: action.payload}
       case "USER_FOR_SALE":
         return {...state, userForSale: action.payload}
+      case "TRANSACTION_RESULT":
+        console.log("REDUCER", action.payload);
+        let updatedTransactionListings = [...state.allListings.filter(list=>list.listings[0].id !== action.payload.listings[0].id), action.payload]
+        console.log("after update",updatedTransactionListings)
+        return{...state, allListings: updatedTransactionListings}
     default:
       return state
   }

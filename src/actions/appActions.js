@@ -57,3 +57,7 @@ export const userForSale = listingsForSale =>{
 export const allStores = stores =>{
   return {type: "ALL_STORES", payload: stores}
 }
+
+export const transactionResult = (listing) =>{
+  return {type: "TRANSACTION_RESULT", payload: listing}
+}

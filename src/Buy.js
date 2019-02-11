@@ -1,8 +1,11 @@
 import React from 'react'
-import {getCurrentUser} from "./thunks/mainThunk"
+import moment from 'moment'
+import {getCurrentUser, performTransaction} from "./thunks/mainThunk"
 import {connect} from 'react-redux'
+import {withRouter} from "react-router-dom"
 import CardListing from './CardListing'
 import GridListContainer from './GridList'
+import LoginPage from "./LoginPage"
 import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
 import Button from '@material-ui/core/Button';
@@ -19,7 +22,8 @@ class Buy extends React.Component {
     sortedList: [],
     sortBy: "Sort By",
     open: false,
-    card: ""
+    card: "",
+    showLogin: false
   }
 
   componentDidMount = () =>{
@@ -27,6 +31,8 @@ class Buy extends React.Component {
     this.props.getCurrentUser()
 
   }
+
+
 
   // componentDidUpdate = () =>{
   //   this.setState({sortedList: this.props.allListings})
@@ -83,12 +89,44 @@ class Buy extends React.Component {
 
   }
 
+  handleShowLogin = () =>{
+    if (!this.props.loggedIn){
+      this.setState({showLogin: !this.state.showLogin})
+    }
+    else{
+      this.purchaseListing()
+    }
+  }
+
   purchaseListing = () => {
-    //check if logged in and has enough money
+
+    if (this.props.user.balance >= this.state.card.listings[0].price){
+      // this.props.performTransaction(listing)
+      console.log(this.state.card);
+      let updatedListing = {
+        id: this.state.card.listings[0].id,
+        date_sold: moment().format("YYYY-MM-DD"),
+        prev_user: this.state.card.user_id,
+        user_id: this.props.user.id
+      }
+      this.props.performTransaction(updatedListing)
+      this.setState({open: !this.state.open})
+    }
+    else{
+      alert("YOU DON'T HAVE ENOUGH TO PURCHASE THIS GIFTCARD!");
+    }
+  }
+
+  hideBuy = (id) =>{
+    // this.setState({showLogin: false})
+    if (id === this.props.user.id){
+    this.setState({open: false})
+  }
   }
 
   render(){
     // console.log("PROPS",this.props);
+    // console.log("STATE in buy",this.state);
     return(
       <div>
         <h2 >Buy Gift Cards:</h2>
@@ -100,7 +138,7 @@ class Buy extends React.Component {
         <MenuItem value={"bl"}>Balance Low to High</MenuItem>
         <MenuItem value={"eh"}>Expiration Date Earliest to Latest</MenuItem>
         <MenuItem value={"el"}>Expiration Date Latest to Earliest</MenuItem>
-        </Select><br></br>
+        </Select><br></br><br></br>
 
         <GridListContainer handleClick={this.handleClick} listings={this.handleSort()}></GridListContainer>
 
@@ -123,12 +161,14 @@ class Buy extends React.Component {
 
           </DialogContent>
           <DialogActions type="form">
-            <Button type="submit" onClick={this.purchaseListing} color="primary">
+            <Button type="submit" onClick={this.handleShowLogin} color="primary">
               Buy Now
             </Button>
 
           </DialogActions>
         </Dialog>):null}
+
+        {this.state.showLogin && !this.props.loggedIn?<LoginPage show={this.handleShowLogin} card={this.state.card} buy={true} hideBuy={this.hideBuy}/>:null}
 
       </div>
     )
@@ -136,12 +176,13 @@ class Buy extends React.Component {
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return {getCurrentUser: () => dispatch(getCurrentUser())}
+  return {getCurrentUser: () => dispatch(getCurrentUser()),
+          performTransaction: (listing) =>dispatch(performTransaction(listing))}
 
 }
 
 const mapStateToProps = (state) =>{
-  return {allListings: state.allListings, loggedIn: state.loggedIn}
+  return {allListings: state.loggedIn?state.allListings.filter(listing=>listing.user_id !== state.user.id):state.allListings, loggedIn: state.loggedIn, user: state.user, userCards: state.userCards}
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(Buy)
+export default withRouter(connect(mapStateToProps,mapDispatchToProps)(Buy))

@@ -38,12 +38,16 @@ class LoginPage extends React.Component {
     // }
   }
 
+
   handleClickOpen = () => {
       this.setState({ open: true });
     };
 
     handleClose = () => {
       this.setState({ open: false });
+      if (this.props.buy){
+        this.props.show()
+      }
     };
 
 
@@ -70,6 +74,7 @@ class LoginPage extends React.Component {
       .then(r =>r===null?null:this.props.setCurrentUser(this.state.user))
       .then(reset => this.setState({open: false}))
 
+
     }
 
   loginUser = (e) =>{
@@ -87,7 +92,8 @@ class LoginPage extends React.Component {
     .then(data=> data.token? (this.setState({user: data.user},localStorage.setItem("token", data.token))):null)
     .then(r =>r===null?null:this.props.setCurrentUser(this.state.user))
     .then(r => r===null?alert("Wrong Password"): (this.props.toggleLogin?this.props.toggleLogin():null))
-
+    .then(test => this.props.hideBuy(this.props.card.user_id))
+    // .then(buy => this.props.card.user_id === this.props.user.id?(this.props.hideBuy(true)):null)
   }
 
   // checkShowOrNot = () =>{
@@ -102,11 +108,15 @@ class LoginPage extends React.Component {
 
   render(){
 
-
+    if (this.props.buy && this.props.card.user_id === this.props.user.id) {
+      this.props.hideBuy()}
+    // console.log("STATE", this.state);
+    // console.log("PROPS", this.props);
 
       return (<div>
       {!this.state.open && this.props.toggleLogin?(this.props.toggleLogin() ):null}
-      {!this.state.open?this.props.history.push("/home"):null}
+
+      {!this.state.open && !this.props.buy?this.props.history.push("/home"):null}
 
 
         <Dialog
@@ -195,7 +205,7 @@ class LoginPage extends React.Component {
   }}
 
 const mapStateToProps = (state) =>{
-  return {loggedIn: state.loggedIn, showLogin: state.showLogin}
+  return {loggedIn: state.loggedIn, showLogin: state.showLogin, user: state.user}
 }
 
 const mapDispatchToProps = dispatch =>{
