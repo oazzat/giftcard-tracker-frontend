@@ -127,7 +127,7 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 const mapStateToProps = state =>{
-  console.log("MAP STATE",state);
+  // console.log("MAP STATE",state);
   return {allCards: state.allCards,
           user: state.user,
           loggedIn: state.loggedIn,

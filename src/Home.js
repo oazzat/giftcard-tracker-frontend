@@ -8,7 +8,9 @@ class Home extends React.Component {
 
   componentDidMount = () =>{
 
-    this.props.getCurrentUser()
+    if (localStorage.token){
+      this.props.getCurrentUser()
+    }
     this.props.getBestSellers()
 
   }

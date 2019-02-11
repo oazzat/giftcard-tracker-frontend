@@ -60,7 +60,7 @@ function GridListContainer(props) {
       </GridListTile>)}
         {props.cards?
         (props.cards.map(tile => (
-          <GridListTile key={tile.id}>
+          <GridListTile key={tile.id*(Math.random()*100)}>
             <img onClick={props.toSell?()=>props.handleClick(tile):null} style={{width: "200px", height: "120px", align: "center"}} src={tile.store.img} alt={tile.title} />
             <GridListTileBar
               style={{height: "40px", width: "400px"}}
@@ -75,7 +75,7 @@ function GridListContainer(props) {
           </GridListTile>)))
           :
           (props.listings.map(tile => (
-            <GridListTile key={tile.id}>
+            <GridListTile key={tile.id*(Math.random()*100)}>
               <img onClick={()=>props.handleClick(tile)} style={{width: "200px", height: "120px", align: "center"}} src={tile.store.img} alt={tile.title} />
 
               <GridListTileBar

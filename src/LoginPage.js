@@ -34,7 +34,7 @@ class LoginPage extends React.Component {
 
   componentDidMount = () =>{
     // if (localStorage.token){
-    //   this.setUser()
+    //   this.props.getCurrentUser()
     // }
   }
 
@@ -92,7 +92,7 @@ class LoginPage extends React.Component {
     .then(data=> data.token? (this.setState({user: data.user},localStorage.setItem("token", data.token))):null)
     .then(r =>r===null?null:this.props.setCurrentUser(this.state.user))
     .then(r => r===null?alert("Wrong Password"): (this.props.toggleLogin?this.props.toggleLogin():null))
-    .then(test => this.props.hideBuy(this.props.card.user_id))
+    .then(test => {if (this.props.buy){return this.props.hideBuy(this.props.card.user_id)}})
     // .then(buy => this.props.card.user_id === this.props.user.id?(this.props.hideBuy(true)):null)
   }
 

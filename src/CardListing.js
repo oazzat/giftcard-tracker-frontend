@@ -16,7 +16,7 @@ toggleForm = () =>{
 }
 
 componentDidMount = () =>{
-  console.log(this.props);
+  // console.log(this.props);
 }
 
 changeHandler = (e) =>{
