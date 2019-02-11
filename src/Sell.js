@@ -4,6 +4,7 @@ import {connect} from 'react-redux'
 import Card from "./Card"
 import {Redirect} from 'react-router-dom'
 import CardListing from './CardListing'
+import LoginPage from './LoginPage'
 
 class Sell extends React.Component {
 
@@ -35,13 +36,13 @@ class Sell extends React.Component {
 
   render(){
 
-      return (
+      return (this.props.loggedIn?
       <div>
         <h2>Choose Card to Sell: </h2>
         {this.getTracked()}
         {this.getPurchased()}
       </div>
-    )
+    :<LoginPage/>)
 
   }
 }

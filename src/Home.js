@@ -14,8 +14,8 @@ class Home extends React.Component {
   }
 
   topSellingCards = () =>{
-
-      return this.props.topSelling.map(obj=><li>{Object.keys(obj)[0]} = {Object.values(obj)[0]}</li>)
+    // console.log(this.props.topSelling)
+      return this.props.topSelling.map(obj=><li key={obj.img}><img style={{width: 300, height: 200}} src={obj.img} />{Object.keys(obj)[0]} = {Object.values(obj)[0]}</li>)
     }
 
 
@@ -24,7 +24,7 @@ class Home extends React.Component {
       <div>
         <h2>Home Page</h2>
 
-        BEST SELLING CARDS:
+        BEST SELLING CARDS:<br></br><br></br>
 
         <div>
         {this.topSellingCards()}

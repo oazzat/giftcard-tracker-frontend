@@ -49,7 +49,7 @@ toggleLogin = () => this.setState({toggle: !this.state.toggle})
 displayLogin = () =><LoginPage toggleLogin={this.toggleLogin}/>
 
   render(){
-    console.log(this.props);
+    // console.log(this.props);
     return(
 
       <div className={this.props.classes.root}>
@@ -60,6 +60,7 @@ displayLogin = () =><LoginPage toggleLogin={this.toggleLogin}/>
             </IconButton>
             <Typography align='left' variant="h5" color="inherit" className={this.props.classes.grow}>
               Giftcard Tracker
+              <Button color="inherit" align='left' onClick={()=>this.props.history.push('/home')}>Home</Button>
               <Button color="inherit" align='left' onClick={()=>this.props.history.push('/buy')}>Buy</Button>
               <Button color="inherit" align='left' onClick={()=>this.props.history.push('/sell')}>Sell</Button>
             </Typography>

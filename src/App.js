@@ -9,8 +9,7 @@ import Home from './Home'
 import Buy from './Buy'
 import Sell from './Sell'
 import Profile from './Profile'
-import {getAllCards} from './thunks/mainThunk'
-import {getAllListings} from './thunks/mainThunk'
+import {getAllListings, getStores} from './thunks/mainThunk'
 import {addCardToListing} from "./actions/appActions"
 import {connect} from 'react-redux'
 import AppBar from '@material-ui/core/AppBar'
@@ -19,10 +18,13 @@ class App extends Component {
 
   componentDidMount = () =>{
 
-    this.props.getAllCards()
-    //this gets cards, which dispatches the get listings which dispatches the adding gc to listings
+    this.props.getAllListings()
+    this.props.getStores()
+
 
   }
+
+
 
   styles = {
     root: {
@@ -63,9 +65,10 @@ class App extends Component {
 // <Route path="/" component={localStorage.token?LoggedInPage:LoginPage} />
 
 const mapDispatchToProps = (dispatch) =>{
-  return {getAllCards: ()=>{dispatch(getAllCards())},
+  return {
           getAllListings: ()=>{dispatch(getAllListings())},
-          addCardToListing: (allListings)=>dispatch(addCardToListing(allListings))}
+          addCardToListing: (allListings)=>dispatch(addCardToListing(allListings)),
+          getStores: ()=>dispatch(getStores())}
 }
 
 const mapStateToProps = (state) =>{

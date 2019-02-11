@@ -48,7 +48,7 @@ showDetails = () =>{
     <div>
       <p>Balance: ${this.props.card.balance}</p>
       <p>Exp Date: {this.props.card['exp_date']}</p>
-      {this.props.sell?<button onClick={this.toggleForm} >Sell</button>:null}
+      {this.props.canList?<button onClick={this.toggleForm} >Sell</button>:null}
       {this.state.toggleForm?(
         <form onChange={this.changeHandler} onSubmit={this.handleSubmit}>
           Price: <input name="price" type="number" onChange={this.changeHandler} value={this.state.price}/>
@@ -67,7 +67,7 @@ handleClick = () =>{
 
     return(
       <div>
-      <img src={this.props.card.img} onClick={this.handleClick}/>
+      <img style={{width: 300, height: 200}} src={this.props.card.store.img} onClick={this.handleClick}/>
       {this.state.clicked?this.showDetails():null}
       </div>
     )

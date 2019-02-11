@@ -8,30 +8,30 @@ let images = {
 }
 
 
-export function mainReducer (state = {user: {}, loggedIn:false, allCards: [], allListings: [],topSelling: [], images}, action ){
+export function mainReducer (state = {user: {}, loggedIn:false, allCards: [], allListings: [], allStores:[], topSelling: [], userCards: [], userSold:[], userPurchased:[], userForSale:[], images}, action ){
   switch (action.type) {
     case "SET_CURRENT_USER":
       return {...state, user: action.payload, loggedIn: true}
     case "RESET_CURRENT_USER":
       return {...state, user: {}, loggedIn: false}
-    case "GET_ALL_CARDS":
-      return {...state, allCards: action.payload}
     case "GET_ALL_LISTINGS":
       return {...state, allListings: action.payload}
-    case "ADD_CARD_TO_LISTINGS":
-
-      // return {...state, allListings: action.payload}
-      let newListings = state.allListings.map(listing=>{
-        let curCard = state.allCards.find(card=>{
-          return card.id === listing.giftcard_id
-        })
-        let newListing = {...listing,giftcard: curCard}
-        // newListing.giftcard = curCard
-        return newListing})
-        return {...state, allListings: newListings}
-      case "ADD_CARD_TO_ALL_CARDS":
-        let newList = [...state.allCards, action.payload]
-        return{...state, allCards: newList}
+    case "ALL_STORES":
+      return {...state, allStores: action.payload}
+    // case "ADD_CARD_TO_LISTINGS":
+    //
+    //   // return {...state, allListings: action.payload}
+    //   let newListings = state.allListings.map(listing=>{
+    //     let curCard = state.allCards.find(card=>{
+    //       return card.id === listing.giftcard_id
+    //     })
+    //     let newListing = {...listing,giftcard: curCard}
+    //     // newListing.giftcard = curCard
+    //     return newListing})
+    //     return {...state, allListings: newListings}
+      case "ADD_CARD_TO_USER_CARDS":
+        let newList = [...state.userCards, action.payload]
+        return{...state, userCards: newList}
       case "ADD_LISTING_TO_LISTINGS":
         let updatedListings = [...state.allListings,action.payload]
         return {...state, allListings: updatedListings}
@@ -41,6 +41,14 @@ export function mainReducer (state = {user: {}, loggedIn:false, allCards: [], al
         return {...state, allCards: newCardss}
       case "TOP_SELLING":
         return {...state, topSelling: action.payload}
+      case "USER_CARDS":
+        return {...state, userCards: action.payload}
+      case "USER_SOLD_LISTINGS":
+        return {...state, userSold: action.payload}
+      case "USER_PURCHASED_LISTINGS":
+        return {...state, userPurchased: action.payload}
+      case "USER_FOR_SALE":
+        return {...state, userForSale: action.payload}
     default:
       return state
   }

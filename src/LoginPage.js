@@ -13,6 +13,10 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import IconButton from '@material-ui/core/IconButton';
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
 
 class LoginPage extends React.Component {
 
@@ -20,14 +24,18 @@ class LoginPage extends React.Component {
     user: "",
     open: true,
     password: "",
-    username: ""
+    username: "",
+    signUp: false,
+    name: "",
+    email: "",
+    showPassword: false
   }
 
 
   componentDidMount = () =>{
-    if (localStorage.token){
-      this.setUser()
-    }
+    // if (localStorage.token){
+    //   this.setUser()
+    // }
   }
 
   handleClickOpen = () => {
@@ -42,7 +50,26 @@ class LoginPage extends React.Component {
     handleChange = name => (e) =>{
       this.setState({
         [name]: e.target.value
-      },console.log(this.state))
+      })
+    }
+
+    signUpUser = (e) =>{
+      e.preventDefault()
+      fetch("http://localhost:3000/api/v1/users/",{
+        method: "POST",
+        headers: {"Content-Type": "application/json", Accept: "application/json"},
+        body: JSON.stringify({user:{
+          username: this.state.username,
+          password: this.state.password,
+          name: this.state.name,
+          email: this.state.email
+        }})
+      })
+      .then(res => res.json())
+      .then(data=> data.token? (this.setState({user: data.user},localStorage.setItem("token", data.token))):null)
+      .then(r =>r===null?null:this.props.setCurrentUser(this.state.user))
+      .then(reset => this.setState({open: false}))
+
     }
 
   loginUser = (e) =>{
@@ -59,7 +86,7 @@ class LoginPage extends React.Component {
     .then(res=>res.json())
     .then(data=> data.token? (this.setState({user: data.user},localStorage.setItem("token", data.token))):null)
     .then(r =>r===null?null:this.props.setCurrentUser(this.state.user))
-    .then(r => r===null?alert("Wrong Password"):this.props.toggleLogin())
+    .then(r => r===null?alert("Wrong Password"): (this.props.toggleLogin?this.props.toggleLogin():null))
 
   }
 
@@ -78,47 +105,88 @@ class LoginPage extends React.Component {
 
 
       return (<div>
-      {!this.state.open?this.props.toggleLogin():null}
+      {!this.state.open && this.props.toggleLogin?(this.props.toggleLogin() ):null}
+      {!this.state.open?this.props.history.push("/home"):null}
+
 
         <Dialog
           open={this.state.open}
           onClose={this.handleClose}
           aria-labelledby="form-dialog-title"
         >
-          <DialogTitle id="form-dialog-title" align="center">Log in</DialogTitle>
+        <DialogActions>
+        <Button style={{align: "right"}} onClick={()=>this.setState({signUp: !this.state.signUp})} color="primary">
+          {!this.state.signUp?"Sign up":"Log in"}
+        </Button>
+        </DialogActions>
+          <DialogTitle id="form-dialog-title" align="center">{!this.state.signUp?"Log in":"Sign Up"}</DialogTitle>
           <DialogContent >
             <DialogContentText>
-              Please login here or click sign up to create a new account
+              {!this.state.signUp?"Please login here or click sign up to create a new account":"Please sign up here or click login if you already have an account"}
             </DialogContentText>
+
+            {this.state.signUp?(
+              <React.Fragment>
+              <TextField
+                autoFocus
+                margin="dense"
+                id="name"
+                label="Name"
+                type="name"
+                value={this.state.name}
+                onChange={this.handleChange('name')}
+                fullWidth
+              />
+               <TextField
+                  autoFocus
+                  margin="dense"
+                  id="email"
+                  label="Email"
+                  type="email"
+                  value={this.state.email}
+                  onChange={this.handleChange('email')}
+                  fullWidth
+                />
+                </React.Fragment>
+            ):null}
+
+
+
             <TextField
               autoFocus
               margin="dense"
               id="username"
               label="Username"
-              type="email"
+              type="username"
               value={this.state.username}
               onChange={this.handleChange('username')}
               fullWidth
             />
             <TextField
-              autoFocus
+              
               margin="dense"
               id="pass"
               ref="password"
               label="Password"
-              type="password"
+              type={this.state.showPassword?"text":"password"}
               value={this.state.password}
               onChange={this.handleChange('password')}
               fullWidth
+              InputProps={{
+                endAdornment: <IconButton
+                aria-label="Toggle password visibility"
+                onClick={()=>this.setState({showPassword: !this.state.showPassword})}
+                >
+                {this.state.showPassword ? <Visibility /> : <VisibilityOff />}
+                </IconButton>
+              }}
             />
           </DialogContent>
           <DialogActions type="form">
-            <Button type="submit" onClick={this.loginUser} color="primary">
+            <Button type="submit" onClick={this.state.signUp?this.signUpUser:this.loginUser} color="primary">
               Submit
             </Button>
-            <Button onClick={this.loginUser} color="primary">
-              Sign up
-            </Button>
+
           </DialogActions>
         </Dialog>
       </div>)

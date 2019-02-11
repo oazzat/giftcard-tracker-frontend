@@ -14,10 +14,6 @@ export const removeLogin = () =>{
   return{type: 'REMOVE_LOGIN', payload: false}
 }
 
-export const populateAllCards = (allCards) => {
-  return {type: "GET_ALL_CARDS", payload: allCards }
-}
-
 export const populateAllListings = (allListings) => {
   return {type: "GET_ALL_LISTINGS", payload: allListings }
 }
@@ -26,8 +22,8 @@ export const addCardToListing = (allListings) => {
   return {type: "ADD_CARD_TO_LISTINGS", payload: allListings }
 }
 
-export const addCardtoAllCards = (newCard) =>{
-  return {type: "ADD_CARD_TO_ALL_CARDS", payload: newCard}
+export const addCardtoUserCards = (newCard) =>{
+  return {type: "ADD_CARD_TO_USER_CARDS", payload: newCard}
 }
 
 export const addListingToListings = (newListing) => {
@@ -40,4 +36,24 @@ export const updateGc = updatedGiftcard =>{
 
 export const topSelling = list =>{
   return {type: "TOP_SELLING", payload: list}
+}
+
+export const userCards = cards =>{
+  return {type: "USER_CARDS", payload: cards}
+}
+
+export const userSold = soldListings =>{
+  return {type: "USER_SOLD_LISTINGS", payload: soldListings}
+}
+
+export const userPurchased = purchasedListings =>{
+  return {type: "USER_PURCHASED_LISTINGS", payload: purchasedListings}
+}
+
+export const userForSale = listingsForSale =>{
+  return {type: "USER_FOR_SALE", payload: listingsForSale}
+}
+
+export const allStores = stores =>{
+  return {type: "ALL_STORES", payload: stores}
 }

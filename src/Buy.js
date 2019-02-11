@@ -2,6 +2,7 @@ import React from 'react'
 import {getCurrentUser} from "./thunks/mainThunk"
 import {connect} from 'react-redux'
 import CardListing from './CardListing'
+import GridListContainer from './GridList'
 
 
 class Buy extends React.Component {
@@ -13,15 +14,13 @@ class Buy extends React.Component {
 
   displayCards = () =>{
     let newArr = []
-    // console.log(this.props.allListings.length)
-    if (this.props.allListings.length > 0 && this.props.allListings[0].giftcard){
-     newArr = this.props.allListings.filter(listing => {
-      return listing['date_sold'] === null
-    })
+    console.log(this.props.allListings)
+    if (this.props.allListings.length > 0 ){
+     newArr = this.props.allListings
 
 
       newArr = newArr.map(item=>{
-      return <li key={item.id}><CardListing key={item.id} card={item.giftcard} listing={item} /></li>
+      return <li key={item.id}><CardListing buy={"buy"} sold={false}key={item.id} card={item} /></li>
     })
 
     }
@@ -34,9 +33,9 @@ class Buy extends React.Component {
     return(
       <div>
         <h2>Buy Gift Cards:</h2>
-        <ul>
-        {this.displayCards()}
-        </ul>
+
+        <GridListContainer listings={this.props.allListings}>{this.displayCards()}</GridListContainer>
+
       </div>
     )
   }
