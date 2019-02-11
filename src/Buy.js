@@ -50,6 +50,10 @@ class Buy extends React.Component {
           return newArr.sort((a,b)=>a.balance > b.balance?-1:1)
         case "bl":
           return newArr.sort((a,b)=>a.balance > b.balance?1:-1)
+        case "eh":
+          return newArr.sort((a,b)=>a.exp_date > b.exp_date?1:-1)
+        case "el":
+          return newArr.sort((a,b)=>a.exp_date > b.exp_date?-1:1)
         break;
       default:
         return this.props.allListings

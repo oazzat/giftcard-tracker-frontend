@@ -72,7 +72,7 @@ handleClick = () =>{
                                           // }
 
   render(){
-    console.log(this.props.listing)
+    // console.log(this.props.listing)
 
     return(
 

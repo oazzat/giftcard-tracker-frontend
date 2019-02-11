@@ -130,14 +130,14 @@ class Profile extends React.Component {
 
 
   render(){
-    console.log("STATE",this.state);
+    // console.log("STATE",this.state);
 
     if (localStorage.token!=undefined || !localStorage.length === 0){
       return (
         <div>
         <h2>Profile Page</h2>
 
-          <Button onClick={()=>this.setState({open: !this.state.open})} color='inherit'>Add Card to Profile:</Button>
+          <Button style={{display: "block", marginLeft: "auto", marginRight: "10%", backgroundColor: "silver"}} onClick={()=>this.setState({open: !this.state.open})} color='inherit'>Add Card to Profile</Button>
 
         <Dialog
           open={this.state.open}

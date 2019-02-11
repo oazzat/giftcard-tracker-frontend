@@ -1,13 +1,28 @@
 import React from 'react'
-import {getCurrentUser, getUserCards} from "./thunks/mainThunk"
+import {getCurrentUser, getUserCards, createListing} from "./thunks/mainThunk"
 import {connect} from 'react-redux'
+import moment from "moment"
 import Card from "./Card"
 import {Redirect} from 'react-router-dom'
 import CardListing from './CardListing'
 import LoginPage from './LoginPage'
 import GridListContainer from "./GridList"
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import InputAdornment from '@material-ui/core/InputAdornment'
 
 class Sell extends React.Component {
+
+  state ={
+    open: false,
+    price: "",
+    card: ""
+  }
 
   componentDidMount = () =>{
 
@@ -15,24 +30,39 @@ class Sell extends React.Component {
     this.props.getUserCards()
   }
 
+  handleClose = () => {
+    this.setState({ open: false });
+  };
 
-  getTracked = () =>{
-    console.log(this.props.userCards);
-      if (this.props.userCards > 0){
-        return this.props.userCards.map(card=>{
-            return <Card key={card.id} card={card} calList={true}/>
-          })
-      }
+  handleChange = name => (e) =>{
+    if(e.target.value <= this.state.card.balance && e.target.value >0){
+      this.setState({
+        [name]: e.target.value
+      })
+    }
   }
 
-  getPurchased = () =>{
-      if (this.props.allListings.length > 0 && this.props.allListings[0].giftcard){
-        return this.props.allListings.filter(listing=>{
-          return (listing.user_id === this.props.user.id && listing['date_sold']!==null )
-        }).reverse().map(listing=>{
-            return <CardListing key={listing.id} card={listing.giftcard}listing={listing} sell={true}/>
-          })
-      }
+  createListing = ()=>{
+    let listing = {
+      price: this.state.price,
+      date_posted: moment().format("YYYY-MM-DD"),
+      giftcard_id: this.state.card.id,
+      user_id: this.state.card.user_id,
+      prev_user: null,
+      date_sold: null
+    }
+    this.props.createListing(listing)
+
+    this.setState({open: !this.state.open})
+  }
+
+  handleClick = (card) =>{
+    console.log(card)
+    this.setState({open: true, card: card, price: card.balance*.8})
+
+
+
+
   }
 
   render(){
@@ -40,9 +70,87 @@ class Sell extends React.Component {
       return (this.props.loggedIn?
       <div>
         <h2>Choose Card to Sell: </h2>
-        <GridListContainer cards={this.props.userCards}></GridListContainer>
-        {this.getTracked()}
-        {this.getPurchased()}
+        <GridListContainer toSell={true} handleClick={this.handleClick} cards={this.props.userCards}></GridListContainer>
+        {this.state.open?(<Dialog
+          open={this.state.open}
+          onClose={this.handleClose}
+          aria-labelledby="form-dialog-title"
+        >
+        {/*<DialogActions>
+        <Button style={{align: "right"}} onClick={()=>this.setState({signUp: !this.state.signUp})} color="primary">
+          {!this.state.signUp?"Sign up":"Log in"}
+        </Button>
+        </DialogActions>*/}
+          <DialogTitle id="form-dialog-title" align="center">Sell</DialogTitle>
+          <DialogContent >
+            <DialogContentText>
+              Confirm you want to put this card for sale and enter the price you want
+            </DialogContentText><br></br>
+
+              {this.state.open?<img style={{display: "block", marginLeft: "auto", marginRight: "auto", height: "auto", width: "50%", maxWidth: "80%"}}src={this.state.card.store.img}/>:null}
+
+              <h3>Balance: ${this.state.card.balance}</h3>
+              <h5>Store: {this.state.card.store.name}</h5>
+              <h5>Expiration Date: {this.state.card.exp_date}</h5>
+
+              <React.Fragment>
+              <TextField
+                autoFocus
+                margin="dense"
+                id="price"
+                label="Price"
+                type="number"
+                value={this.state.price}
+                onChange={this.handleChange('price')}
+                onKeyDown={(e)=>e.key==="e" || e.key==="E"?e.preventDefault():null}
+                fullWidth
+                InputProps={{
+                              startAdornment: <InputAdornment position="start">$</InputAdornment>,
+                            }}
+              />
+
+                </React.Fragment>
+
+
+
+
+            {/*<TextField
+              autoFocus
+              margin="dense"
+              id="username"
+              label="Username"
+              type="username"
+              value={this.state.username}
+              onChange={this.handleChange('username')}
+              fullWidth
+            />
+            <TextField
+
+              margin="dense"
+              id="pass"
+              ref="password"
+              label="Password"
+              type={this.state.showPassword?"text":"password"}
+              value={this.state.password}
+              onChange={this.handleChange('password')}
+              fullWidth
+              InputProps={{
+                endAdornment: <IconButton
+                aria-label="Toggle password visibility"
+                onClick={()=>this.setState({showPassword: !this.state.showPassword})}
+                >
+                {this.state.showPassword ? <Visibility /> : <VisibilityOff />}
+                </IconButton>
+              }}
+            />*/}
+          </DialogContent>
+          <DialogActions type="form">
+            <Button type="submit" onClick={this.createListing} color="primary">
+              Sell Now
+            </Button>
+
+          </DialogActions>
+        </Dialog>):null}
       </div>
     :<LoginPage/>)
 
@@ -51,16 +159,19 @@ class Sell extends React.Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {getCurrentUser: () => dispatch(getCurrentUser()),
-          getUserCards: () => dispatch(getUserCards())}
+          getUserCards: () => dispatch(getUserCards()),
+          createListing: (listing)=>dispatch(createListing(listing))}
 
 }
 
 const mapStateToProps = state =>{
+  console.log("MAP STATE",state.userCards);
   return {allCards: state.allCards,
           user: state.user,
           loggedIn: state.loggedIn,
-          allListings: state.allListings,
-          userCards: state.userCards.filter(listing=>listing.listed===false)
+          // allListings: state.allListings,
+          userCards: state.userCards.filter(listing=>listing.listed===false),
+          allListings: state.allListings
         }
 }
 

@@ -163,7 +163,7 @@ class LoginPage extends React.Component {
               fullWidth
             />
             <TextField
-              
+
               margin="dense"
               id="pass"
               ref="password"
@@ -204,8 +204,8 @@ const mapDispatchToProps = dispatch =>{
           }
         }
 
-LoginPage.propTypes = {
-  classes: PropTypes.object.isRequired,
-  }
+// LoginPage.propTypes = {
+//   classes: PropTypes.object.isRequired,
+//   }
 
 export default withRouter(connect(mapStateToProps,mapDispatchToProps)(LoginPage))

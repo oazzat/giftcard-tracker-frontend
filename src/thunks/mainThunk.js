@@ -52,18 +52,20 @@ export const createListing = (listing) => dispatch =>{
   .then(res => res.json())
   .then(listing => {
     dispatch(addListingToListings(listing))
-    return listing
+    dispatch(getUserCards())
+    // return listing
   })
-  .then(listing => fetch(`http://localhost:3000/api/v1/giftcards/${listing.giftcard_id}`,{
-    method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${localStorage.token}`
-    },
-    body: JSON.stringify({listed: true})
-  }))
-  .then(res => res.json())
-  .then(newGc => dispatch(updateGc(newGc)))
+  // .then(getCards => {getUserCards();getAllListings()})
+  // .then(listing => fetch(`http://localhost:3000/api/v1/giftcards/${listing.giftcard_id}`,{
+  //   method: "PATCH",
+  //   headers: {
+  //     "Content-Type": "application/json",
+  //     Authorization: `Bearer ${localStorage.token}`
+  //   },
+  //   body: JSON.stringify({listed: true})
+  // }))
+  // .then(res => res.json())
+  // .then(newGc => dispatch(updateGc(newGc)))
 }
 
 export const getBestSellers = () => dispatch => {
