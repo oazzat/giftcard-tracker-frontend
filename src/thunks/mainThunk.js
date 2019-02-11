@@ -108,7 +108,7 @@ export const getUserForSale = () => dispatch => {
 }
 
 export const performTransaction = (card) => dispatch =>{
-  console.log("THE ACRD", card);
+  // console.log("THE ACRD", card);
   return fetch(`http://localhost:3000/api/v1/listings/${card.id}`,{
     method: "PATCH",
     headers: {"Content-Type": "application/json", Authorization: `Bearer ${localStorage.token}`},

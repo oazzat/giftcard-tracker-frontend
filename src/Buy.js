@@ -84,7 +84,7 @@ class Buy extends React.Component {
   };
 
   handleClick = (card) =>{
-    console.log(card)
+    // console.log(card)
     this.setState({open: true, card: card})
 
   }
@@ -102,7 +102,7 @@ class Buy extends React.Component {
 
     if (this.props.user.balance >= this.state.card.listings[0].price){
       // this.props.performTransaction(listing)
-      console.log(this.state.card);
+      // console.log(this.state.card);
       let updatedListing = {
         id: this.state.card.listings[0].id,
         date_sold: moment().format("YYYY-MM-DD"),
