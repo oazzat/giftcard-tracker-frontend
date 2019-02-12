@@ -67,8 +67,9 @@ class Sell extends React.Component {
   render(){
 
       return (this.props.loggedIn?
-      <div>
-        <h2>Choose Card to Sell: </h2>
+      <div style={{position: "sticky", marginTop: "65px" ,marginBottom:"0",backgroundColor: "burlywood"}}>
+        <br></br>
+        <h2 style={{color: "ivory"}}>Choose Card to Sell: </h2>
         <GridListContainer toSell={true} handleClick={this.handleClick} cards={this.props.userCards}></GridListContainer>
         {this.state.open?(<Dialog
           open={this.state.open}

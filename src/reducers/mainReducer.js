@@ -30,10 +30,15 @@ export function mainReducer (state = {user: {}, loggedIn:false, allCards: [], al
     //     return newListing})
     //     return {...state, allListings: newListings}
       case "ADD_CARD_TO_USER_CARDS":
-        let newList = [...state.userCards, action.payload]
+        console.log(state.userCards);
+        let newList = []
+        if (state.userCards.length<1){newList = [action.payload]}
+        else{newList = [...state.userCards, action.payload]}
         return{...state, userCards: newList}
       case "ADD_LISTING_TO_LISTINGS":
-        let updatedListings = [...state.allListings,action.payload]
+        let updatedListings = []
+        if (state.allListings.length < 2) {updatedListings = [action.payload]}
+        else {updatedListings = [...state.allListings,action.payload]}
         return {...state, allListings: updatedListings}
       case "UPDATE_GIFTCARD":
         let newCardss = state.allCards.filter(gcard => gcard.user_id !== action.payload.user_id)

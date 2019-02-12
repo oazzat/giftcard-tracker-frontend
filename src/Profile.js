@@ -25,6 +25,7 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
 import FilledInput from '@material-ui/core/FilledInput';
+import ListSubheader from '@material-ui/core/ListSubheader';
 import GridListContainer from './GridList'
 
 
@@ -132,11 +133,13 @@ class Profile extends React.Component {
   render(){
     // console.log("STATE",this.state);
     // console.log(this.props.userCards);
+    console.log(this.props);
 
     if (localStorage.token!=undefined || !localStorage.length === 0){
       return (
-        <div>
-        <h2>Profile Page</h2>
+        <div style={{ marginTop: "65px" ,marginBottom:"0",backgroundColor: "burlywood"}}>
+        <br></br>
+        <h2 style={{color: "ivory"}}>Profile Page</h2>
 
           <Button style={{display: "block", marginLeft: "auto", marginRight: "10%", backgroundColor: "silver"}} onClick={()=>this.setState({open: !this.state.open})} color='inherit'>Add Card to Profile</Button>
 
@@ -234,24 +237,24 @@ class Profile extends React.Component {
 
 
 
-        <div>
-        All My Current Cards:
-        <GridListContainer cards={this.props.userCards}></GridListContainer>
+          <div style={{backgroundColor: "burlywood"}}>
+        <ListSubheader style={{backgroundColor: "burlywood",paddingLeft:"45px",height: "120px",textAlign:'left', display: "block",zIndex: 10,position: "sticky",marginLeft: "0px", width:"26%", fontSize:"25px", paddingTop: "70px"}}component="div"><span style={{}}>All My Current Cards:</span></ListSubheader>
+        <GridListContainer style={{zIndex: 1, position: "sticky"}} cards={this.props.userCards}></GridListContainer>
         </div>
 
-        <div>
-        My Sold Cards:
-        {this.getSold()}
+        <div style={{backgroundColor: "burlywood"}}>
+        <ListSubheader style={{backgroundColor: "burlywood",height: "120px",textAlign:'left', display: "block",zIndex: 10,position: "sticky",marginLeft: "0px", width:"25%", fontSize:"25px", paddingTop: "70px", paddingLeft:"45px"}} component="div">My Sold Cards:</ListSubheader>
+        <GridListContainer sold={true} style={{zIndex: 1, position: "sticky"}} actualListings={this.props.userSold}></GridListContainer>
         </div>
 
-        <div>
-        My Purchased Cards:
-        {this.getPurchased()}
+        <div style={{backgroundColor: "burlywood"}}>
+        <ListSubheader style={{backgroundColor: "burlywood",paddingLeft:"45px",height: "120px",textAlign:'left', display: "block",zIndex: 10,position: "sticky",marginLeft: "0px", width:"26%", fontSize:"25px", paddingTop: "70px"}}component="div">My Purchased Cards:</ListSubheader>
+        <GridListContainer sold={true} style={{zIndex: 1, position: "sticky"}} actualListings={this.props.userPurchased}></GridListContainer>
         </div>
 
-        <div>
-        My Listings:
-        {this.getListings()}
+        <div style={{backgroundColor: "burlywood"}}>
+        <ListSubheader style={{backgroundColor: "burlywood",paddingLeft:"45px",height: "120px",textAlign:'left', display: "block",zIndex: 10,position: "sticky",marginLeft: "0px", width:"25%", fontSize:"25px", paddingTop: "70px"}}component="div">My Current Listings:</ListSubheader>
+        <GridListContainer sold={true} style={{zIndex: 1, position: "sticky"}} actualListings={this.props.userForSale}></GridListContainer>
         </div>
 
         </div>

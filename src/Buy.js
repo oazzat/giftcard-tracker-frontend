@@ -61,10 +61,10 @@ class Buy extends React.Component {
     let newArr = [...this.props.allListings]
     switch (this.state.sortBy) {
       case "ph":
-          newArr = newArr.sort((a,b)=>a.listings[0].price > b.listings[0].price?-1:1)
+          newArr = newArr.sort((a,b)=>a.listings[a.listings.length-1].price > b.listings[b.listings.length-1].price?-1:1)
           break
         case "pl":
-          newArr = newArr.sort((a,b)=>a.listings[0].price > b.listings[0].price?1:-1)
+          newArr = newArr.sort((a,b)=>a.listings[a.listings.length-1].price > b.listings[b.listings.length-1].price?1:-1)
           break
         case "bh":
           newArr = newArr.sort((a,b)=>a.balance > b.balance?-1:1)
@@ -111,11 +111,11 @@ class Buy extends React.Component {
 
   purchaseListing = () => {
 
-    if (this.props.user.balance >= this.state.card.listings[0].price){
+    if (this.props.user.balance >= this.state.card.listings[this.state.card.listings.length-1].price){
       // this.props.performTransaction(listing)
       // console.log(this.state.card);
       let updatedListing = {
-        id: this.state.card.listings[0].id,
+        id: this.state.card.listings[this.state.card.listings.length-1].id,
         date_sold: moment().format("YYYY-MM-DD"),
         prev_user: this.state.card.user_id,
         user_id: this.props.user.id
@@ -139,9 +139,10 @@ class Buy extends React.Component {
     // console.log("PROPS",this.props);
     // console.log("STATE in buy",this.state);
     return(
-      <div>
-        <h2 >Buy Gift Cards:</h2>
-        <Select value={this.state.sortBy} onChange={this.handleSelect}>
+      <div style={{position: "sticky",  marginTop: "65px" ,marginBottom:"0",backgroundColor: "burlywood"}}>
+        <br></br>
+        <h2 style={{color: "ivory"}}>Buy Gift Cards:</h2>
+        <Select style={{color: "ivory"}} value={this.state.sortBy} onChange={this.handleSelect}>
         <MenuItem value={"Sort By"}>Sort By</MenuItem>
         <MenuItem value={"ph"}>Price High to Low</MenuItem>
         <MenuItem value={"pl"}>Price Low to High</MenuItem>

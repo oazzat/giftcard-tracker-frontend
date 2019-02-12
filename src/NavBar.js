@@ -19,6 +19,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 const styles = {
   root: {
     flexGrow: 1,
+
   },
   grow: {
     flexGrow: 1,
@@ -52,21 +53,21 @@ displayLogin = () =><LoginPage toggleLogin={this.toggleLogin}/>
     // console.log(this.props);
     return(
 
-      <div className={this.props.classes.root}>
-        <AppBar position="static" >
+      <div className={this.props.classes.root} style={{backgroundColor: "burlywood"}}>
+        <AppBar position="fixed"  >
           <Toolbar>
-            <IconButton className={this.props.classes.menuButton} color="inherit" aria-label="Menu">
+            {/*<IconButton className={this.props.classes.menuButton} color="inherit" aria-label="Menu">
               <MenuIcon />
-            </IconButton>
-            <Typography align='left' variant="h5" color="inherit" className={this.props.classes.grow}>
+            </IconButton>*/}
+            <Typography style={{color: "burlywood"}}align='left' variant="h5" color="inherit" className={this.props.classes.grow}>
               Giftcard Tracker
               <Button color="inherit" align='left' onClick={()=>this.props.history.push('/home')}>Home</Button>
               <Button color="inherit" align='left' onClick={()=>this.props.history.push('/buy')}>Buy</Button>
               <Button color="inherit" align='left' onClick={()=>this.props.history.push('/sell')}>Sell</Button>
             </Typography>
-            {this.props.loggedIn?<Button color='inherit' >Current Balance: ${this.props.user.balance}</Button>:null}
-            {this.props.loggedIn?<Button color='inherit' onClick={()=>this.props.history.push('/profile')}>Profile</Button>:null}
-            {!this.props.loggedIn?<Button color="inherit" onClick={() => this.setState({toggle: !this.state.toggle})}>Login</Button>:<Button color='inherit' onClick={this.logOut}>LOG OUT</Button>}
+            {this.props.loggedIn?<Button style={{color: "burlywood"}} color='inherit' >Current Balance: ${this.props.user.balance}</Button>:null}
+            {this.props.loggedIn?<Button style={{color: "burlywood"}} color='inherit' onClick={()=>this.props.history.push('/profile')}>Profile</Button>:null}
+            {!this.props.loggedIn?<Button style={{color: "burlywood"}} color="inherit" onClick={() => this.setState({toggle: !this.state.toggle})}>Login</Button>:<Button style={{color: "burlywood"}} color='inherit' onClick={this.logOut}>LOG OUT</Button>}
           </Toolbar>
         </AppBar>
 

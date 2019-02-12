@@ -13,6 +13,7 @@ import {getAllListings, getStores} from './thunks/mainThunk'
 import {addCardToListing} from "./actions/appActions"
 import {connect} from 'react-redux'
 import AppBar from '@material-ui/core/AppBar'
+import img from "./images/bgImage.jpg"
 
 class App extends Component {
 
@@ -41,11 +42,12 @@ class App extends Component {
   render() {
 
     return (
-      <div className="App">
+      <div className="App" style={{backgroundColor: "burlywood"}}>
           <BrowserRouter>
             <React.Fragment>
 
-            <NavBar/>
+            <NavBar />
+
             <Switch>
 
               <Route path='/home' component={Home} />

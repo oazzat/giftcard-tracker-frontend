@@ -19,8 +19,8 @@ const styles = theme => ({
     // opacity: ".5"
   },
   gridList: {
-    width: 'responsive',
-    height: "responsive",
+    width: '1300px',
+    height: "auto",
   },
   icon: {
     color: 'rgba(255, 255, 255, 0.5)',
@@ -48,11 +48,11 @@ function GridListContainer(props) {
   const { classes } = props;
 
   return (
-    <div className={classes.root}>
+    <div className={classes.root} style={{backgroundColor: "burlywood"}}>
       <GridList cols={4}cellHeight={200}  className={classes.gridList}>
 
       {props.cards?(<GridListTile key="Subheader" cols={4} style={{ height: 'auto' }}>
-      <ListSubheader component="div">All My Current Cards</ListSubheader>
+      {/*<ListSubheader style={{display:"block",marginLeft: "0px", marginRight: "0px", width:"40%", fontSize:"25px"}}component="div">All My Current Cards:</ListSubheader>*/}
       </GridListTile>)
       :
       (<GridListTile key="Subheader" cols={4} style={{ height: 'auto' }}>
@@ -60,10 +60,13 @@ function GridListContainer(props) {
       </GridListTile>)}
         {props.cards?
         (props.cards.map(tile => (
-          <GridListTile key={tile.id*(Math.random()*100)}>
-            <img onClick={props.toSell?()=>props.handleClick(tile):null} style={{width: "200px", height: "120px", align: "center"}} src={tile.store.img} alt={tile.title} />
+          <GridListTile style={{paddingTop: "40px", display:"block", marginRight: "auto", marginLeft: "auto"}}cols ={1} rows={1.2}key={tile.id*(Math.random()*100)}>
+            <div style={{display: "block",width:"85%",marginLeft: "auto", marginRight: "auto"}}>
+            <img style={{width: '85%',marginLeft:"auto",marginRight:"auto", height: "120px", paddingTop: "25px"}}onClick={props.toSell?()=>props.handleClick(tile):null}  src={tile.store.img} alt={tile.title} />
+
             <GridListTileBar
-              style={{height: "40px", width: "400px"}}
+              rows={2}
+              style={{height: "20%", width: "85%", paddingBottom: "10px", marginLeft: "auto",marginRight: "auto", borderRadius: "10px"}}
               title={"Balance: $" + tile.balance}
               subtitle={<span>Balance: ${tile.balance}</span>}
               actionIcon={
@@ -72,15 +75,17 @@ function GridListContainer(props) {
                 </IconButton>
               }
             />
+            </div>
           </GridListTile>)))
           :
-          (props.listings.map(tile => (
-            <GridListTile key={tile.id*(Math.random()*100)}>
-              <img onClick={()=>props.handleClick(tile)} style={{width: "200px", height: "120px", align: "center"}} src={tile.store.img} alt={tile.title} />
+          props.listings?(props.listings.map(tile => (
+            <GridListTile style={{paddingTop: "40px"}}cols ={1} rows={1.2} key={tile.id*(Math.random()*100)}>
+            <div style={{display: "block",width:"85%",marginLeft: "auto", marginRight: "auto"}}>
+              <img onClick={()=>props.handleClick(tile)} style={{width: '85%',marginLeft:"auto",marginRight:"auto", height: "120px", paddingTop: "25px"}} src={tile.store.img} alt={tile.title} />
 
               <GridListTileBar
-                style={{height: "40px", width: "400px"}}
-                title={<span style={{display: "flex"}}>Price: $ {tile.listings[0].price}</span>}
+                style={{height: "20%", width: "85%", paddingBottom: "10px", marginLeft: "auto",marginRight: "auto", borderRadius: "10px"}}
+                title={<span style={{display: "flex"}}>Price: $ {tile.listings[tile.listings.length-1].price}</span>}
                 subtitle={<span >Balance: ${tile.balance}</span>}
 
                 actionIcon={
@@ -89,7 +94,29 @@ function GridListContainer(props) {
                   </IconButton>
                 }
               />
-            </GridListTile>)))}
+              </div>
+            </GridListTile>)))
+          :
+          props.actualListings?
+          (props.actualListings.map(tile => (
+            <GridListTile style={{paddingTop: "40px"}}cols ={1} rows={1.2} key={tile.id*(Math.random()*100)}>
+            <div style={{display: "block",width:"85%",marginLeft: "auto", marginRight: "auto"}}>
+              <img  style={{width: '85%',marginLeft:"auto",marginRight:"auto", height: "120px", paddingTop: "25px"}} src={tile.giftcard.store.img} alt={tile.title} />
+
+              <GridListTileBar
+                style={{height: "20%", width: "85%", paddingBottom: "10px", marginLeft: "auto",marginRight: "auto", borderRadius: "10px"}}
+                title={<span style={{display: "flex"}}>Price: $ {tile.price}</span>}
+                subtitle={<span >Price: ${tile.price}</span>}
+
+                actionIcon={
+                  <IconButton className={classes.icon}>
+                    <InfoIcon />
+                  </IconButton>
+                }
+              />
+              </div>
+            </GridListTile>)))
+        :null}
 
       </GridList>
     </div>

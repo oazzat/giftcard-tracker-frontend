@@ -66,12 +66,23 @@ class LoginPage extends React.Component {
           username: this.state.username,
           password: this.state.password,
           name: this.state.name,
-          email: this.state.email
+          email: this.state.email,
+          balance: 0
         }})
       })
       .then(res => res.json())
       .then(data=> data.token? (this.setState({user: data.user},localStorage.setItem("token", data.token))):null)
-      .then(r =>r===null?null:this.props.setCurrentUser(this.state.user))
+      .then(r =>r===null?alert("User Already Exists!"):this.props.setCurrentUser(this.state.user))
+      // .then(data=> {
+      //     if (data.token){
+      //         (this.setState({user: data.user},()=>{localStorage.setItem("token", data.token); return data.user}))
+      //     }
+      //     else if (data.message){
+      //       alert(data.message)
+      //       return null
+      //     }
+      //   })
+      // .then(r =>r===null?null:this.props.setCurrentUser(this.state.user))
       .then(reset => this.setState({open: false}))
 
 

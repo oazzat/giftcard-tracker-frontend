@@ -59,5 +59,6 @@ export const allStores = stores =>{
 }
 
 export const transactionResult = (listing) =>{
+  console.log("ACTION",listing);
   return {type: "TRANSACTION_RESULT", payload: listing}
 }

@@ -23,10 +23,11 @@ class Home extends React.Component {
 
   render(){
     return(
-      <div>
-        <h2>Home Page</h2>
+      <div style={{position: "sticky", marginTop: "65px" ,marginBottom:"0",backgroundColor: "burlywood"}}>
+        <br></br>
+        <h2 style={{color: "ivory"}}>Best Selling Giftcards:</h2>
+        <br></br>
 
-        BEST SELLING CARDS:<br></br><br></br>
 
         <div>
         {this.topSellingCards()}
