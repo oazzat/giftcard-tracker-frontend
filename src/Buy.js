@@ -15,6 +15,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import Spinner from 'react-spinner-material'
 
 class Buy extends React.Component {
 
@@ -23,7 +24,9 @@ class Buy extends React.Component {
     sortBy: "Sort By",
     open: false,
     card: "",
-    showLogin: false
+    showLogin: false,
+    page: 0,
+    loading: true
   }
 
   componentDidMount = () =>{
@@ -54,29 +57,37 @@ class Buy extends React.Component {
     return newArr
   }
 
-  handleSort = () =>{
+  handleSort = (page) =>{
     let newArr = [...this.props.allListings]
     switch (this.state.sortBy) {
       case "ph":
-        return newArr = newArr.sort((a,b)=>a.listings[0].price > b.listings[0].price?-1:1)
-      case "pl":
-        return newArr = newArr.sort((a,b)=>a.listings[0].price > b.listings[0].price?1:-1)
+          newArr = newArr.sort((a,b)=>a.listings[0].price > b.listings[0].price?-1:1)
+          break
+        case "pl":
+          newArr = newArr.sort((a,b)=>a.listings[0].price > b.listings[0].price?1:-1)
+          break
         case "bh":
-          return newArr.sort((a,b)=>a.balance > b.balance?-1:1)
+          newArr = newArr.sort((a,b)=>a.balance > b.balance?-1:1)
+          break
         case "bl":
-          return newArr.sort((a,b)=>a.balance > b.balance?1:-1)
+          newArr = newArr.sort((a,b)=>a.balance > b.balance?1:-1)
+          break
         case "eh":
-          return newArr.sort((a,b)=>a.exp_date > b.exp_date?1:-1)
+          newArr = newArr.sort((a,b)=>a.exp_date > b.exp_date?1:-1)
+          break
         case "el":
-          return newArr.sort((a,b)=>a.exp_date > b.exp_date?-1:1)
-        break;
-      default:
-        return this.props.allListings
+          newArr = newArr.sort((a,b)=>a.exp_date > b.exp_date?-1:1)
+          break
+        // default:
+        //   return newArr.slice(page,page+20)
     }
+
+    console.log(newArr);
+    return newArr.slice(page,page+20)
   }
 
   handleSelect = (e) =>{
-    this.setState({sortBy: e.target.value})
+    this.setState({sortBy: e.target.value, page: 0})
   }
 
   handleClose = () => {
@@ -140,7 +151,17 @@ class Buy extends React.Component {
         <MenuItem value={"el"}>Expiration Date Latest to Earliest</MenuItem>
         </Select><br></br><br></br>
 
-        <GridListContainer handleClick={this.handleClick} listings={this.handleSort()}></GridListContainer>
+        {this.props.allListings.length<1?<div style={{display: "block", marginLeft: "auto", marginRight: "auto",marginTop: "5%", width: "16%",align:'middle'}}>
+        <Spinner size={180} spinnerColor={"blue"} spinnerWidth={5} visible={this.props.allListings.length>0?false:true} />
+        </div>:null}
+
+        <GridListContainer handleClick={this.handleClick} listings={this.handleSort(this.state.page)}></GridListContainer>
+        {this.state.page-20 >= 0 ?<Button onClick={()=>this.setState({page: this.state.page-20},window.scrollTo(0,0))} color="inherit">
+          Previous Page
+        </Button>:null}
+        {this.state.page+20 <= this.props.allListings.length?<Button onClick={()=>this.setState({page: this.state.page+20},window.scrollTo(0,0))} color="inherit">
+          Next Page
+        </Button>:null}
 
         {this.state.open?(<Dialog
           open={this.state.open}
