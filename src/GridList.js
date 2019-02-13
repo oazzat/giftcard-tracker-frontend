@@ -61,6 +61,8 @@ function GridListContainer(props) {
         {props.cards?
         (props.cards.map(tile => (
           <GridListTile style={{paddingTop: "40px", display:"block", marginRight: "auto", marginLeft: "auto"}}cols ={1} rows={1.2}key={tile.id*(Math.random()*100)}>
+          {tile.hasExpired?<img  style={{position:"absolute" , width: '85%',marginLeft:"auto",marginRight:"auto", height: "120px", paddingTop: "25px"}} src={"https://pngimage.net/wp-content/uploads/2018/05/expired-png-1.png"} alt={tile.title} />
+          :null}
             <div style={{display: "block",width:"85%",marginLeft: "auto", marginRight: "auto"}}>
             <img style={{width: '85%',marginLeft:"auto",marginRight:"auto", height: "120px", paddingTop: "25px"}}onClick={props.toSell?()=>props.handleClick(tile):null}  src={tile.store.img} alt={tile.title} />
 
@@ -80,6 +82,8 @@ function GridListContainer(props) {
           :
           props.listings?(props.listings.map(tile => (
             <GridListTile style={{paddingTop: "40px"}}cols ={1} rows={1.2} key={tile.id*(Math.random()*100)}>
+            {tile.hasExpired?<img  style={{position:"absolute" , width: '85%',marginLeft:"auto",marginRight:"auto", height: "120px", paddingTop: "25px"}} src={"https://pngimage.net/wp-content/uploads/2018/05/expired-png-1.png"} alt={tile.title} />
+            :null}
             <div style={{display: "block",width:"85%",marginLeft: "auto", marginRight: "auto"}}>
               <img onClick={()=>props.handleClick(tile)} style={{width: '85%',marginLeft:"auto",marginRight:"auto", height: "120px", paddingTop: "25px"}} src={tile.store.img} alt={tile.title} />
 
@@ -100,9 +104,10 @@ function GridListContainer(props) {
           props.actualListings?
           (props.actualListings.map(tile => (
             <GridListTile style={{paddingTop: "40px"}}cols ={1} rows={1.2} key={tile.id*(Math.random()*100)}>
+            {tile.giftcard.hasExpired?<img  style={{position:"absolute" , width: '85%',marginLeft:"auto",marginRight:"auto", height: "120px", paddingTop: "25px"}} src={"https://pngimage.net/wp-content/uploads/2018/05/expired-png-1.png"} alt={tile.title} />
+            :null}
             <div style={{display: "block",width:"85%",marginLeft: "auto", marginRight: "auto"}}>
               <img  style={{width: '85%',marginLeft:"auto",marginRight:"auto", height: "120px", paddingTop: "25px"}} src={tile.giftcard.store.img} alt={tile.title} />
-
               <GridListTileBar
                 style={{height: "20%", width: "85%", paddingBottom: "10px", marginLeft: "auto",marginRight: "auto", borderRadius: "10px"}}
                 title={<span style={{display: "flex"}}>Price: $ {tile.price}</span>}

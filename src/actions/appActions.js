@@ -62,3 +62,11 @@ export const transactionResult = (listing) =>{
   console.log("ACTION",listing);
   return {type: "TRANSACTION_RESULT", payload: listing}
 }
+
+export const filteredForSale = (filteredList,searchBy) => {
+  return {type: "FILTERED_FOR_SALE", payload: {filteredList: filteredList,searchBy: searchBy}}
+}
+
+export const updatedUser = (user) =>{
+  return {type: "UPDATED_USER", payload: user}
+}

@@ -1,7 +1,7 @@
 import {setCurrentUser} from '../actions/appActions'
 import {resetCurrentUser, updateGc} from '../actions/appActions'
 import {addCardtoUserCards, userCards, allStores, userSold, userPurchased, userForSale, transactionResult} from '../actions/appActions'
-import {populateAllListings, addListingToListings, topSelling} from '../actions/appActions'
+import {populateAllListings, addListingToListings, topSelling, updatedUser} from '../actions/appActions'
 
 
 export const getCurrentUser = () => dispatch => {
@@ -120,6 +120,16 @@ export const performTransaction = (card) => dispatch =>{
   .then(disp => dispatch(getUserForSale()))
   .then(disp => dispatch(getUserCards()))
 
+}
+
+export const updateUserAmount = (amount,id) => (dispatch) =>{
+  return fetch(`http://localhost:3000/api/v1/users/${id}`,{
+    method: "PATCH",
+    headers: {"Content-Type": "application/json", Authorization: `Bearer ${localStorage.token}`},
+    body: JSON.stringify({balance: amount})
+  })
+  .then(res => res.json())
+  .then(user => dispatch(updatedUser(user)))
 }
 
 // const combineCardsAndListings = (allListings) =>{

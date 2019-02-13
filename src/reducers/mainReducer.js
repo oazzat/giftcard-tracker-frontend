@@ -8,14 +8,14 @@ let images = {
 }
 
 
-export function mainReducer (state = {user: {}, loggedIn:false, allCards: [], allListings: [], allStores:[], topSelling: [], userCards: [], userSold:[], userPurchased:[], userForSale:[], images}, action ){
+export function mainReducer (state = {user: {}, loggedIn:false, allCards: [], allListings: [],filteredList:[],searchBy:"", allStores:[], topSelling: [], userCards: [], userSold:[], userPurchased:[], userForSale:[], images}, action ){
   switch (action.type) {
     case "SET_CURRENT_USER":
       return {...state, user: action.payload, loggedIn: true}
     case "RESET_CURRENT_USER":
       return {...state, user: {}, loggedIn: false}
     case "GET_ALL_LISTINGS":
-      return {...state, allListings: action.payload}
+      return {...state, allListings: action.payload, filteredList: action.payload}
     case "ALL_STORES":
       return {...state, allStores: action.payload}
     // case "ADD_CARD_TO_LISTINGS":
@@ -55,10 +55,14 @@ export function mainReducer (state = {user: {}, loggedIn:false, allCards: [], al
       case "USER_FOR_SALE":
         return {...state, userForSale: action.payload}
       case "TRANSACTION_RESULT":
-        console.log("REDUCER", action.payload);
+        // console.log("REDUCER", action.payload);
         let updatedTransactionListings = [...state.allListings.filter(list=>list.listings[0].id !== action.payload.listings[0].id), action.payload]
-        console.log("after update",updatedTransactionListings)
+        // console.log("after update",updatedTransactionListings)
         return{...state, allListings: updatedTransactionListings}
+      case "FILTERED_FOR_SALE":
+        return {...state, filteredList: action.payload.filteredList, searchBy: action.payload.searchBy}
+      case "UPDATED_USER":
+        return{...state, user: action.payload }
     default:
       return state
   }

@@ -59,7 +59,7 @@ class Sell extends React.Component {
   }
 
   handleClick = (card) =>{
-    console.log(card)
+    // console.log(card)
     this.setState({open: true, card: card, price: card.balance*.8})
 
   }
@@ -69,7 +69,7 @@ class Sell extends React.Component {
       return (this.props.loggedIn?
       <div style={{position: "sticky", marginTop: "65px" ,marginBottom:"0",backgroundColor: "burlywood"}}>
         <br></br>
-        <h2 style={{color: "ivory"}}>Choose Card to Sell: </h2>
+        <h2 style={{color: "#3F51B5"}}>Choose Card to Sell: </h2>
         <GridListContainer toSell={true} handleClick={this.handleClick} cards={this.props.userCards}></GridListContainer>
         {this.state.open?(<Dialog
           open={this.state.open}

@@ -43,7 +43,11 @@ class Profile extends React.Component {
     date_verified: null,
     open: false,
     showPassword: false,
-    store: {id: 1, name: "Best-Buy", img: "https://us4products.nimblecommerce.com/api/v1/images/17015/skin"}
+    store: {id: 1, name: "Best-Buy", img: "https://us4products.nimblecommerce.com/api/v1/images/17015/skin"},
+    toggle0: true,
+    toggle1: true,
+    toggle2: true,
+    toggle3: true,
   }
 
   componentDidMount = () =>{
@@ -53,10 +57,8 @@ class Profile extends React.Component {
     this.props.getUserSold()
     this.props.getUserPurchased()
     this.props.getUserForSale()
-
-
-
   }
+
 
 
 
@@ -114,6 +116,12 @@ class Profile extends React.Component {
   }
   }
 
+  handleDateChange = (e) =>{
+    if (moment(e.target.value)>moment()){
+      this.setState({[e.target.name]: e.target.value})
+    }
+  }
+
   addCard = () =>{
 
     this.props.createCard({
@@ -133,15 +141,15 @@ class Profile extends React.Component {
   render(){
     // console.log("STATE",this.state);
     // console.log(this.props.userCards);
-    console.log(this.props);
+    // console.log(this.props);
 
     if (localStorage.token!=undefined || !localStorage.length === 0){
       return (
         <div style={{ marginTop: "65px" ,marginBottom:"0",backgroundColor: "burlywood"}}>
         <br></br>
-        <h2 style={{color: "ivory"}}>Profile Page</h2>
+        <h2 style={{color: "#3F51B5"}}>{`Welcome, ${this.props.user.name!=undefined?this.props.user.name:""}`}</h2>
 
-          <Button style={{display: "block", marginLeft: "auto", marginRight: "10%", backgroundColor: "silver"}} onClick={()=>this.setState({open: !this.state.open})} color='inherit'>Add Card to Profile</Button>
+          <Button style={{display: "block", marginLeft: "auto", marginRight: "10%", backgroundColor: "#3F51B5", color: "#DEB787"}} onClick={()=>this.setState({open: !this.state.open})} color='inherit'>Add Card to Profile</Button>
 
         <Dialog
           open={this.state.open}
@@ -177,7 +185,7 @@ class Profile extends React.Component {
                label="Exp Date"
                type="date"
                value={this.state.exp_date}
-               onChange={this.changeHandler}
+               onChange={this.handleDateChange}
                fullWidth
              />
 
@@ -238,24 +246,25 @@ class Profile extends React.Component {
 
 
           <div style={{backgroundColor: "burlywood"}}>
-        <ListSubheader style={{backgroundColor: "burlywood",paddingLeft:"45px",height: "120px",textAlign:'left', display: "block",zIndex: 10,position: "sticky",marginLeft: "0px", width:"26%", fontSize:"25px", paddingTop: "70px"}}component="div"><span style={{}}>All My Current Cards:</span></ListSubheader>
-        <GridListContainer style={{zIndex: 1, position: "sticky"}} cards={this.props.userCards}></GridListContainer>
-        </div>
+          <ListSubheader onClick={()=>this.setState({toggle0: !this.state.toggle0})} style={{color: '#3F51B5', backgroundColor: "burlywood",paddingLeft:"45px",height: "120px",textAlign:'left', display: "block",zIndex: 10,position: "sticky",marginLeft: "0px", width:"26%", fontSize:"25px", paddingTop: "70px",fontWeight: "bold"}}component="div">All My Current Cards:</ListSubheader>
+
+        {this.state.toggle0?<GridListContainer style={{zIndex: 1, position: "sticky"}} cards={this.props.userCards}></GridListContainer>
+        :null}</div>
 
         <div style={{backgroundColor: "burlywood"}}>
-        <ListSubheader style={{backgroundColor: "burlywood",height: "120px",textAlign:'left', display: "block",zIndex: 10,position: "sticky",marginLeft: "0px", width:"25%", fontSize:"25px", paddingTop: "70px", paddingLeft:"45px"}} component="div">My Sold Cards:</ListSubheader>
-        <GridListContainer sold={true} style={{zIndex: 1, position: "sticky"}} actualListings={this.props.userSold}></GridListContainer>
-        </div>
+        <ListSubheader onClick={()=>this.setState({toggle1: !this.state.toggle1})} style={{color: '#3F51B5', backgroundColor: "burlywood",height: "120px",textAlign:'left', display: "block",zIndex: 10,position: "sticky",marginLeft: "0px", width:"25%", fontSize:"25px", paddingTop: "70px", paddingLeft:"45px",fontWeight: "bold"}} component="div">My Sold Cards:</ListSubheader>
+        {this.state.toggle1?<GridListContainer sold={true} style={{zIndex: 1, position: "sticky"}} actualListings={this.props.userSold}></GridListContainer>
+        :null}</div>
 
         <div style={{backgroundColor: "burlywood"}}>
-        <ListSubheader style={{backgroundColor: "burlywood",paddingLeft:"45px",height: "120px",textAlign:'left', display: "block",zIndex: 10,position: "sticky",marginLeft: "0px", width:"26%", fontSize:"25px", paddingTop: "70px"}}component="div">My Purchased Cards:</ListSubheader>
-        <GridListContainer sold={true} style={{zIndex: 1, position: "sticky"}} actualListings={this.props.userPurchased}></GridListContainer>
-        </div>
+        <ListSubheader onClick={()=>this.setState({toggle2: !this.state.toggle2})} style={{color: '#3F51B5',backgroundColor: "burlywood",paddingLeft:"45px",height: "120px",textAlign:'left', display: "block",zIndex: 10,position: "sticky",marginLeft: "0px", width:"26%", fontSize:"25px", paddingTop: "70px",fontWeight: "bold"}}component="div">My Purchased Cards:</ListSubheader>
+        {this.state.toggle2?<GridListContainer sold={true} style={{zIndex: 1, position: "sticky"}} actualListings={this.props.userPurchased}></GridListContainer>
+        :null}</div>
 
         <div style={{backgroundColor: "burlywood"}}>
-        <ListSubheader style={{backgroundColor: "burlywood",paddingLeft:"45px",height: "120px",textAlign:'left', display: "block",zIndex: 10,position: "sticky",marginLeft: "0px", width:"25%", fontSize:"25px", paddingTop: "70px"}}component="div">My Current Listings:</ListSubheader>
-        <GridListContainer sold={true} style={{zIndex: 1, position: "sticky"}} actualListings={this.props.userForSale}></GridListContainer>
-        </div>
+        <ListSubheader onClick={()=>this.setState({toggle3: !this.state.toggle3})} style={{color: '#3F51B5', backgroundColor: "burlywood",paddingLeft:"45px",height: "120px",textAlign:'left', display: "block",zIndex: 10,position: "sticky",marginLeft: "0px", width:"25%", fontSize:"25px", paddingTop: "70px",fontWeight: "bold"}}component="div">My Current Listings:</ListSubheader>
+        {this.state.toggle3?<GridListContainer sold={true} style={{zIndex: 1, position: "sticky"}} actualListings={this.props.userForSale}></GridListContainer>
+        :null}</div>
 
         </div>
       )

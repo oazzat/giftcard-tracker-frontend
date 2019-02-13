@@ -2,6 +2,7 @@ import React from 'react'
 import {NavLink, Redirect, withRouter} from "react-router-dom"
 import {connect} from 'react-redux'
 import {removeLogin, setCurrentUser} from './actions/appActions'
+import {getUserCards} from './thunks/mainThunk'
 import PropTypes from 'prop-types';
 import Popover from '@material-ui/core/Popover';
 import Typography from '@material-ui/core/Typography';
@@ -104,6 +105,7 @@ class LoginPage extends React.Component {
     .then(r =>r===null?null:this.props.setCurrentUser(this.state.user))
     .then(r => r===null?alert("Wrong Password"): (this.props.toggleLogin?this.props.toggleLogin():null))
     .then(test => {if (this.props.buy){return this.props.hideBuy(this.props.card.user_id)}})
+    .then(getUserCards => this.props.getUserCards())
     // .then(buy => this.props.card.user_id === this.props.user.id?(this.props.hideBuy(true)):null)
   }
 
@@ -221,7 +223,8 @@ const mapStateToProps = (state) =>{
 
 const mapDispatchToProps = dispatch =>{
   return {removeLogin: ()=>dispatch(removeLogin()),
-          setCurrentUser: (user)=>dispatch(setCurrentUser(user))
+          setCurrentUser: (user)=>dispatch(setCurrentUser(user)),
+          getUserCards: ()=>dispatch(getUserCards())
           }
         }
 
