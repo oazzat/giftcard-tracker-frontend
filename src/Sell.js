@@ -15,6 +15,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import InputAdornment from '@material-ui/core/InputAdornment'
+import BottomNavigation from '@material-ui/core/BottomNavigation'
 
 class Sell extends React.Component {
 
@@ -71,6 +72,7 @@ class Sell extends React.Component {
         <br></br>
         <h2 style={{color: "#3F51B5"}}>Choose Card to Sell: </h2>
         <GridListContainer toSell={true} handleClick={this.handleClick} cards={this.props.userCards}></GridListContainer>
+        <br></br>
         {this.state.open?(<Dialog
           open={this.state.open}
           onClose={this.handleClose}
@@ -114,6 +116,8 @@ class Sell extends React.Component {
 
           </DialogActions>
         </Dialog>):null}
+        {this.props.userCards.length>0?<BottomNavigation style={{backgroundColor: "#3F51B5"}}></BottomNavigation>:null}
+        <br></br>
       </div>
     :<LoginPage/>)
 

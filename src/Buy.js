@@ -220,7 +220,8 @@ class Buy extends React.Component {
 
               {this.state.open?<img style={{display: "block", marginLeft: "auto", marginRight: "auto", height: "auto", width: "50%", maxWidth: "80%"}}src={this.state.card.store.img}/>:null}
 
-              <h3>Balance: ${this.state.card.balance}</h3>
+              <h3 style={{textAlign: "center"}}>Price: ${this.state.card.listings[this.state.card.listings.length-1].price}</h3>
+              <h4>Balance: ${this.state.card.balance}</h4>
               <h5>Store: {this.state.card.store.name}</h5>
               <h5>Expiration Date: {moment(this.state.card.exp_date).format("MM-DD-YYYY")}</h5>
 

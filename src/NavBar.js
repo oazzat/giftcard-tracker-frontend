@@ -89,8 +89,8 @@ displayMoneyReload = () =>{
               <MenuIcon />
             </IconButton>*/}
             <Typography style={{color: "burlywood"}}align='left' variant="h5" color="inherit" className={this.props.classes.grow}>
-              Giftcard Tracker
-              <Button color="inherit" align='left' onClick={()=>this.props.history.push('/home')}>Home</Button>
+              Giftcard Wallet
+              <Button style={{marginLeft: "10px"}}color="inherit" align='left' onClick={()=>this.props.history.push('/home')}>Home</Button>
               <Button color="inherit" align='left' onClick={()=>this.props.history.push('/buy')}>Buy</Button>
               <Button color="inherit" align='left' onClick={()=>this.props.history.push('/sell')}>Sell</Button>
             </Typography>

@@ -5,6 +5,7 @@ import {filteredForSale} from "./actions/appActions"
 import {connect} from 'react-redux'
 import Button from '@material-ui/core/Button'
 import {withRouter} from 'react-router-dom'
+import BottomNavigation from '@material-ui/core/BottomNavigation'
 
 class Home extends React.Component {
 
@@ -45,6 +46,9 @@ class Home extends React.Component {
         <div>
         {this.topSellingCards()}
         </div>
+        <br></br>
+        {this.props.topSelling.length>0?<BottomNavigation style={{backgroundColor: "#3F51B5"}}></BottomNavigation>:null}
+        <br></br>
       </div>
     )
   }

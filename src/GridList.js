@@ -7,6 +7,7 @@ import GridListTileBar from '@material-ui/core/GridListTileBar';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import IconButton from '@material-ui/core/IconButton';
 import InfoIcon from '@material-ui/icons/Info';
+import moment from 'moment'
 
 
 const styles = theme => ({
@@ -60,6 +61,7 @@ function GridListContainer(props) {
       </GridListTile>)}
         {props.cards?
         (props.cards.map(tile => (
+
           <GridListTile style={{paddingTop: "40px", display:"block", marginRight: "auto", marginLeft: "auto"}}cols ={1} rows={1.2}key={tile.id*(Math.random()*100)}>
           {tile.hasExpired?<img  style={{position:"absolute" , width: '85%',marginLeft:"auto",marginRight:"auto", height: "120px", paddingTop: "25px"}} src={"https://pngimage.net/wp-content/uploads/2018/05/expired-png-1.png"} alt={tile.title} />
           :null}
@@ -69,13 +71,9 @@ function GridListContainer(props) {
             <GridListTileBar
               rows={2}
               style={{height: "20%", width: "85%", paddingBottom: "10px", marginLeft: "auto",marginRight: "auto", borderRadius: "10px"}}
-              title={"Balance: $" + tile.balance}
-              subtitle={<span>Balance: ${tile.balance}</span>}
-              actionIcon={
-                <IconButton className={classes.icon}>
-                  <InfoIcon />
-                </IconButton>
-              }
+              title={<span style={{display: "flex"}}>Balance: $ {tile.balance}</span>}
+              subtitle={<span style={{display: "flex", marginLeft: '80px'}}>Exp: {moment(tile.exp_date).format("MM-DD-YY")}</span>}
+
             />
             </div>
           </GridListTile>)))
@@ -85,18 +83,15 @@ function GridListContainer(props) {
             {tile.hasExpired?<img  style={{position:"absolute" , width: '85%',marginLeft:"auto",marginRight:"auto", height: "120px", paddingTop: "25px"}} src={"https://pngimage.net/wp-content/uploads/2018/05/expired-png-1.png"} alt={tile.title} />
             :null}
             <div style={{display: "block",width:"85%",marginLeft: "auto", marginRight: "auto"}}>
-              <img onClick={()=>props.handleClick(tile)} style={{width: '85%',marginLeft:"auto",marginRight:"auto", height: "120px", paddingTop: "25px"}} src={tile.store.img} alt={tile.title} />
+              <img onClick={()=>props.handleClick(tile)} style={{width: '85%',marginLeft:"auto",marginRight:"auto",height: "120px", paddingTop: "25px"}} src={tile.store.img} alt={tile.title} />
 
               <GridListTileBar
-                style={{height: "20%", width: "85%", paddingBottom: "10px", marginLeft: "auto",marginRight: "auto", borderRadius: "10px"}}
+                style={{height: "20%", width: "85%",paddingBottom: "10px", marginLeft: "auto",marginRight: "auto", borderRadius: "10px"}}
                 title={<span style={{display: "flex"}}>Price: $ {tile.listings[tile.listings.length-1].price}</span>}
-                subtitle={<span >Balance: ${tile.balance}</span>}
+                subtitle={<span style={{display: "flex"}}> Balance: ${tile.balance}<span style={{marginLeft: "24px"}}>Exp: {moment(tile.exp_date).format("MM-DD-YY")}</span></span>}
 
-                actionIcon={
-                  <IconButton className={classes.icon}>
-                    <InfoIcon />
-                  </IconButton>
-                }
+
+
               />
               </div>
             </GridListTile>)))
@@ -110,14 +105,11 @@ function GridListContainer(props) {
               <img  style={{width: '85%',marginLeft:"auto",marginRight:"auto", height: "120px", paddingTop: "25px"}} src={tile.giftcard.store.img} alt={tile.title} />
               <GridListTileBar
                 style={{height: "20%", width: "85%", paddingBottom: "10px", marginLeft: "auto",marginRight: "auto", borderRadius: "10px"}}
-                title={<span style={{display: "flex"}}>Price: $ {tile.price}</span>}
-                subtitle={<span >Price: ${tile.price}</span>}
+                title={<span style={{display: "flex"}}>Balance: $ {tile.giftcard.balance}</span>}
+                subtitle={<span style={{display: "flex", marginLeft: '80px'}}>Exp: {moment(tile.exp_date).format("MM-DD-YY")}</span>}
 
-                actionIcon={
-                  <IconButton className={classes.icon}>
-                    <InfoIcon />
-                  </IconButton>
-                }
+
+
               />
               </div>
             </GridListTile>)))

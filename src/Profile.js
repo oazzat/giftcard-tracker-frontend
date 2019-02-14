@@ -26,6 +26,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
 import FilledInput from '@material-ui/core/FilledInput';
 import ListSubheader from '@material-ui/core/ListSubheader';
+import BottomNavigation from '@material-ui/core/BottomNavigation';
 import GridListContainer from './GridList'
 
 
@@ -265,6 +266,10 @@ class Profile extends React.Component {
         <ListSubheader onClick={()=>this.setState({toggle3: !this.state.toggle3})} style={{color: '#3F51B5', backgroundColor: "burlywood",paddingLeft:"45px",height: "120px",textAlign:'left', display: "block",zIndex: 10,position: "sticky",marginLeft: "0px", width:"25%", fontSize:"25px", paddingTop: "70px",fontWeight: "bold"}}component="div">My Current Listings:</ListSubheader>
         {this.state.toggle3?<GridListContainer sold={true} style={{zIndex: 1, position: "sticky"}} actualListings={this.props.userForSale}></GridListContainer>
         :null}</div>
+
+        <br></br>
+        {this.props.userCards.length>0?<BottomNavigation style={{backgroundColor: "#3F51B5"}}></BottomNavigation>:null}
+        <br></br>
 
         </div>
       )
