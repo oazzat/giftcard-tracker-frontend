@@ -1,7 +1,7 @@
 import {setCurrentUser} from '../actions/appActions'
 import {resetCurrentUser, updateGc} from '../actions/appActions'
 import {addCardtoUserCards, userCards, allStores, userSold, userPurchased, userForSale, transactionResult} from '../actions/appActions'
-import {populateAllListings, addListingToListings, topSelling, updatedUser} from '../actions/appActions'
+import {populateAllListings, addListingToListings, topSelling, updatedUser, removeCard, unlistCard, deleteListing} from '../actions/appActions'
 
 
 export const getCurrentUser = () => dispatch => {
@@ -130,6 +130,25 @@ export const updateUserAmount = (amount,id) => (dispatch) =>{
   })
   .then(res => res.json())
   .then(user => dispatch(updatedUser(user)))
+}
+
+export const deleteCard = (id) => dispatch => {
+  return fetch(`http://localhost:3000/api/v1/giftcards/${id}`,{method: "DELETE",headers: {Authorization: `Bearer ${localStorage.token}`}})
+    .then(res => res.json())
+    .then(data => dispatch(removeCard(data.id)))
+}
+
+export const patchListed = (id, listId) => dispatch => {
+  return fetch (`http://localhost:3000/api/v1/giftcards/${id}`,{method: "PATCH",
+        headers: {Authorization: `Bearer ${localStorage.token}`},
+        body: JSON.stringify({listed: false})})
+    .then(res => res.json())
+    .then(data => dispatch(unlistCard(data.id)))
+    .then(fet => fetch (`http://localhost:3000/api/v1/listings/${listId}`,{method: "DELETE",
+          headers: {Authorization: `Bearer ${localStorage.token}`},
+        }))
+      .then(res=>res.json())
+      .then(data=>dispatch(deleteListing(data.id)))
 }
 
 // const combineCardsAndListings = (allListings) =>{

@@ -3,7 +3,7 @@ import {NavLink} from "react-router-dom"
 import LoginPage from './LoginPage'
 import {connect} from "react-redux"
 import {resetCurrentUser} from './actions/appActions'
-import {updateUserAmount} from './thunks/mainThunk'
+import {updateUserAmount, getAllListings} from './thunks/mainThunk'
 import {Redirect, withRouter} from 'react-router-dom'
 import Buy from './Buy'
 import Sell from './Sell'
@@ -53,6 +53,7 @@ state = {
 
 logOut = () =>{
   this.props.resetCurrentUser()
+  // this.props.getAllListings()
   return this.props.history.push('/home')
 }
 
@@ -94,7 +95,7 @@ displayMoneyReload = () =>{
               <Button color="inherit" align='left' onClick={()=>this.props.history.push('/buy')}>Buy</Button>
               <Button color="inherit" align='left' onClick={()=>this.props.history.push('/sell')}>Sell</Button>
             </Typography>
-            {this.props.loggedIn?<Button onClick={()=>this.setState({open: !this.state.open})}style={{color: "burlywood"}} color='inherit' >Current Balance: ${this.props.user.balance}</Button>:null}
+            {this.props.loggedIn?<Button onClick={()=>this.setState({open: !this.state.open})}style={{color: "burlywood"}} color='inherit' ><span style={{marginRight: '30px'}}>Current Balance: ${this.props.user.balance}</span></Button>:null}
             {this.props.loggedIn?<Button style={{color: "burlywood"}} color='inherit' onClick={()=>this.props.history.push('/profile')}>Profile</Button>:null}
             {!this.props.loggedIn?<Button style={{color: "burlywood"}} color="inherit" onClick={() => this.setState({toggle: !this.state.toggle})}>Login</Button>:<Button style={{color: "burlywood"}} color='inherit' onClick={this.logOut}>LOG OUT</Button>}
           </Toolbar>
@@ -162,7 +163,8 @@ const mapStateToProps = (state) =>{
 const mapDispatchToProps = (dispatch) =>{
   return{
     resetCurrentUser: ()=>dispatch(resetCurrentUser()),
-    updateUserAmount: (amount, id) =>dispatch(updateUserAmount(amount, id))
+    updateUserAmount: (amount, id) =>dispatch(updateUserAmount(amount, id)),
+    getAllListings: ()=>dispatch(getAllListings())
   }
 }
 

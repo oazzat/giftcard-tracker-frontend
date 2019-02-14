@@ -70,3 +70,15 @@ export const filteredForSale = (filteredList,searchBy) => {
 export const updatedUser = (user) =>{
   return {type: "UPDATED_USER", payload: user}
 }
+
+export const removeCard = (id) =>{
+  return {type: "REMOVE_CARD", payload: id}
+}
+
+export const unlistCard = (id) =>{
+  return {type: "UNLIST_CARD", payload: id}
+}
+
+export const deleteListing = (id) => {
+  return {type: "DELETE_LISTING", payload: id}
+}

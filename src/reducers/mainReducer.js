@@ -33,9 +33,10 @@ export function mainReducer (state = {user: {}, loggedIn:false, allCards: [], al
         console.log(state.userCards);
         let newList = []
         if (state.userCards.length<1){newList = [action.payload]}
-        else{newList = [...state.userCards, action.payload]}
+        else{newList = [ action.payload,...state.userCards]}
         return{...state, userCards: newList}
       case "ADD_LISTING_TO_LISTINGS":
+        console.log("HIT IT")
         let updatedListings = []
         if (state.allListings.length < 2) {updatedListings = [action.payload]}
         else {updatedListings = [...state.allListings,action.payload]}
@@ -63,6 +64,34 @@ export function mainReducer (state = {user: {}, loggedIn:false, allCards: [], al
         return {...state, filteredList: action.payload.filteredList, searchBy: action.payload.searchBy}
       case "UPDATED_USER":
         return{...state, user: action.payload }
+      case "REMOVE_CARD":
+        let newUserCards = state.userCards.filter(card=>card.id != action.payload)
+        return{...state, userCards: newUserCards}
+      case "UNLIST_CARD":
+        let unlistedCard = {...state.userForSale.find(item=>item.giftcard.id == action.payload)}
+        unlistedCard.giftcard.listed = false
+
+        let unlistedCard2 = {...state.userForSale.find(item=>item.giftcard.id == action.payload)}
+        unlistedCard2.giftcard.listed = false
+
+        let unlistedListing = {...state.allListings.find(item=>item.id==action.payload)}
+        unlistedListing.listed = false
+
+        let unlistedListing4 = {...state.allListings.find(item=>item.id==action.payload)}
+        unlistedListing4.listed = false
+
+        // let newUserCardArr = state.userCards.map(card=>card.id == action.payload?)
+
+        // let newSold = state.userSold.map(listing=>listing.giftcard.id==action.payload?listing.giftcard.listed = false:listing)
+        let newPurch = state.userPurchased.map(listing=>listing.giftcard.id==action.payload?unlistedCard:listing)
+        let newForSale = state.userForSale.map(listing=>listing.giftcard.id==action.payload?unlistedCard2:listing)
+        let newAll = state.allListings.map(listing=>listing.id==action.payload?unlistedListing:listing)
+        let newFilt = state.filteredList.map(listing=>listing.id==action.payload?unlistedListing4:listing)
+        return {...state, allListings: newAll, filteredList: newFilt, userForSale: newForSale}
+      case "DELETE_LISTING":
+      console.log("THIS", action.payload)
+        let filtArr = state.userForSale.filter(listing=>listing.id!=action.payload)
+        return {...state, userForSale: filtArr}
     default:
       return state
   }

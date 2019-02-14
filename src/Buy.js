@@ -1,6 +1,6 @@
 import React from 'react'
 import moment from 'moment'
-import {getCurrentUser, performTransaction} from "./thunks/mainThunk"
+import {getCurrentUser, performTransaction, getAllListings, getUserForSale} from "./thunks/mainThunk"
 import {filteredForSale} from "./actions/appActions"
 import {connect} from 'react-redux'
 import {withRouter} from "react-router-dom"
@@ -36,6 +36,8 @@ class Buy extends React.Component {
 
     this.props.getCurrentUser()
     // this.setState({searchBy: this.props.searchBy})
+    // this.props.getAllListings()
+    this.props.getUserForSale()
   }
 
   componentWillUnmount = () =>{
@@ -45,7 +47,7 @@ class Buy extends React.Component {
   filterTheList = ()=>{
     let newFilter = this.props.allListings.filter(listing=>!listing.hasExpired)
     newFilter = newFilter.filter(listing=>{
-      return this.props.loggedIn?(listing.store.name.toLowerCase().includes(this.state.searchBy.toLowerCase()) && listing.user_id !== this.props.user.id)
+      return this.props.loggedIn?(listing.store.name.toLowerCase().includes(this.state.searchBy.toLowerCase()) && listing.user_id != this.props.user.id)
       :
       (listing.store.name.toLowerCase().includes(this.state.searchBy.toLowerCase()))
     })
@@ -247,7 +249,9 @@ class Buy extends React.Component {
 const mapDispatchToProps = (dispatch) => {
   return {getCurrentUser: () => dispatch(getCurrentUser()),
           performTransaction: (listing) =>dispatch(performTransaction(listing)),
-          filteredForSale: (list)=>dispatch(filteredForSale(list))}
+          filteredForSale: (list)=>dispatch(filteredForSale(list)),
+          getAllListings: ()=>dispatch(getAllListings()),
+        getUserForSale: ()=>dispatch(getUserForSale())}
 
 }
 
