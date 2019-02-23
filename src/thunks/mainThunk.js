@@ -16,7 +16,7 @@ export const getCurrentUser = () => dispatch => {
 
 export const getAllListings = () => dispatch =>{
     return fetch(`${HEROKU_ENDPOINTS}giftcards/for_sale`)
-        .then(res => res.json())
+        .then(res => console.log(res))
         // .then(allListings => combineCardsAndListings(allListings))
         .then(allListings => {
           dispatch(populateAllListings(allListings))
