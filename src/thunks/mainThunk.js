@@ -8,7 +8,13 @@ export const getCurrentUser = () => dispatch => {
 
   return fetch("http://localhost:3000/api/v1/profile",
         {method: "GET", headers: {Authorization: `Bearer ${localStorage.token}`}})
-    .then(res => res.json())
+    .then(res => {
+      if (res.ok){
+      return res.json())}
+      else{
+        throw new Error('Not Logged In')
+      }
+    })
     .then(user => user.status === 500? dispatch(resetCurrentUser()) : dispatch(setCurrentUser(user)))
     .then(disp => disp.type === "SET_CURRENT_USER"? dispatch(getUserCards()):null)
 }
@@ -103,7 +109,13 @@ export const getUserForSale = () => dispatch => {
   return fetch("http://localhost:3000/api/v1/listings/user_for_sale",{
     headers: {Authorization: `Bearer ${localStorage.token}`}
   })
-  .then(res => res.json())
+  .then(res => {
+    if (res.ok){
+    res.json()}
+    else{
+      throw new Error("Don't Need User for Sale")
+    }
+  })
   .then(listings => dispatch(userForSale(listings)))
 }
 
