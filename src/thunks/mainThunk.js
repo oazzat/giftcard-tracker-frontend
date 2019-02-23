@@ -10,7 +10,7 @@ export const getCurrentUser = () => dispatch => {
         {method: "GET", headers: {Authorization: `Bearer ${localStorage.token}`}})
     .then(res => {
       if (res.ok){
-      return res.json())}
+      return res.json()}
       else{
         throw new Error('Not Logged In')
       }
