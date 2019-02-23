@@ -19,7 +19,11 @@ import IconButton from '@material-ui/core/IconButton';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 
+const HEROKU_ENDPOINTS = 'https://giftcard-wallet.herokuapp.com/api/v1/'
+
 class LoginPage extends React.Component {
+
+// HEROKU_ENDPOINTS = 'https://giftcard-wallet.herokuapp.com/api/v1/'
 
   state = {
     user: "",
@@ -60,7 +64,7 @@ class LoginPage extends React.Component {
 
     signUpUser = (e) =>{
       e.preventDefault()
-      fetch("http://localhost:3000/api/v1/users/",{
+      fetch(`${HEROKU_ENDPOINTS}users/`,{
         method: "POST",
         headers: {"Content-Type": "application/json", Accept: "application/json"},
         body: JSON.stringify({user:{
@@ -92,7 +96,7 @@ class LoginPage extends React.Component {
   loginUser = (e) =>{
     e.preventDefault()
 
-    fetch("http://localhost:3000/api/v1/login/",{
+    fetch(`${HEROKU_ENDPOINTS}login/`,{
       method: "POST",
       headers: {"Content-Type": "application/json", Accept: "application/json"},
       body: JSON.stringify({
