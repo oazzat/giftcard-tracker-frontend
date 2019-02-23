@@ -19,7 +19,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 
-const HEROKU_ENDPOINTS = 'https://giftcard-wallet.herokuapp.com/api/v1/'
+const HEROKU_ENDPOINTS = 'https://giftcard-wallet-backend.herokuapp.com/api/v1/'
 
 class LoginPage extends React.Component {
 

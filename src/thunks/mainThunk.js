@@ -3,7 +3,7 @@ import {resetCurrentUser, updateGc} from '../actions/appActions'
 import {addCardtoUserCards, userCards, allStores, userSold, userPurchased, userForSale, transactionResult} from '../actions/appActions'
 import {populateAllListings, addListingToListings, topSelling, updatedUser, removeCard, unlistCard, deleteListing} from '../actions/appActions'
 
-const HEROKU_ENDPOINTS = 'https://giftcard-wallet.herokuapp.com/api/v1/'
+const HEROKU_ENDPOINTS = 'https://giftcard-wallet-backend.herokuapp.com/api/v1/'
 
 export const getCurrentUser = () => dispatch => {
 
