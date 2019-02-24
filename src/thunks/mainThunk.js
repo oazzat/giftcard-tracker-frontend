@@ -17,13 +17,6 @@ export const getCurrentUser = () => dispatch => {
         throw new Error('Not Logged In')
       }
     })
-        .then(res => {
-          if (res.ok){
-          return res.json()}
-          else{
-            throw new Error('Not Logged In')
-          }
-        })
 
     .then(user => user.status === 500? dispatch(resetCurrentUser()) : dispatch(setCurrentUser(user)))
     .then(disp => disp.type === "SET_CURRENT_USER"? dispatch(getUserCards()):null)
@@ -125,10 +118,6 @@ export const getUserForSale = () => dispatch => {
     else{
       throw new Error("Don't Need User for Sale")
 
-    return res.json()}
-    else{
-      throw new Error("Don't Need User For Sale")
-    }
   })
   .then(listings => dispatch(userForSale(listings)))
 }
