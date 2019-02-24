@@ -27,8 +27,8 @@ class Sell extends React.Component {
 
   componentDidMount = () =>{
 
-    this.props.getCurrentUser()
     if (this.props.loggedIn){
+    this.props.getCurrentUser()
       this.props.getUserCards()
     }
   }
