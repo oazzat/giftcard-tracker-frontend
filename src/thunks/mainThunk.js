@@ -114,11 +114,11 @@ export const getUserForSale = () => dispatch => {
   })
   .then(res => {
     if (res.ok){
-    res.json()}
+    return res.json()}
     else{
       throw new Error("Don't Need User for Sale")
 
-  })
+  }})
   .then(listings => dispatch(userForSale(listings)))
 }
 
