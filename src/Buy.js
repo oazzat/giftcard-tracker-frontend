@@ -34,10 +34,12 @@ class Buy extends React.Component {
 
   componentDidMount = () =>{
 
+    if (this.props.loggedIn){
     this.props.getCurrentUser()
     // this.setState({searchBy: this.props.searchBy})
     // this.props.getAllListings()
     this.props.getUserForSale()
+  }
   }
 
   componentWillUnmount = () =>{
